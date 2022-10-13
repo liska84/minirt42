@@ -130,6 +130,7 @@ typedef struct s_vp
 	float   height;
 	float   x_pix;
 	float   y_pix;
+	float	z_pix;
 	float   aspect_ratio;
 }   t_vp;
 
@@ -150,9 +151,9 @@ typedef struct s_minirt
 	int32_t		height;
 }	t_minirt;
 
-void	error(void); // allocation 
-void	p_error(void); // parser error
-void	m_error(void); // mlx error
+void		error(void); // allocation 
+void		p_error(void); // parser error
+void		m_error(void); // mlx error
 
 void    	draw_scene(t_minirt *mt);
 void		hook(void *param);

@@ -140,7 +140,7 @@ int main(int ac, char **av)
 	/// --- ///
 
 	t_cylinder cy;
-	cy.coordinates.x = -30;
+	cy.coordinates.x = -50.0;
 	cy.coordinates.y = -20;
 	cy.coordinates.z = -100;
 	// Normalized vector ! Check for the range [-1, 1]
@@ -167,7 +167,7 @@ int main(int ac, char **av)
 	mt->scene.camera.direction.x = 0.0;
 	mt->scene.camera.direction.y = 0.0;
 	mt->scene.camera.direction.z = -1.0;
-	mt->scene.camera.fov = 70.0;
+	mt->scene.camera.fov = 80.0;
 	
 	//No color in mandatory part
 	mt->scene.light.bright = 0.9;
@@ -178,11 +178,18 @@ int main(int ac, char **av)
 	mt->scene.light.color.g = 255;
 	mt->scene.light.color.b = 255;
 	
+	// Check for the negative degree
 	mt->vp.aspect_ratio = (float)mt->width / (float)mt->height;
-	mt->vp.height = 2 * tanf((mt->scene.camera.fov / 2) * (M_PI / 180)); // Vertical FOV
-	mt->vp.width = mt->vp.height * mt->vp.aspect_ratio;
-	mt->vp.x_pix = mt->vp.width / mt->width;
-	mt->vp.y_pix = mt->vp.height / mt->height;
+
+	// printf("Aspect ratio: %f\n", mt->vp.aspect_ratio);
+
+	mt->vp.height = tanf(mt->scene.camera.fov * 0.5 * (M_PI / 180)); // Vertical FOV
+	mt->vp.width = mt->vp.height * mt->vp.aspect_ratio; // tanf(mt->scene.camera.fov * 0.5 * (M_PI / 180)) * mt->vp.aspect_ratio
+	// mt->vp.x_pix = mt->vp.width / mt->width;
+	// mt->vp.y_pix = mt->vp.height / mt->height;
+	mt->vp.x_pix = 0;
+	mt->vp.y_pix = 0;
+	mt->vp.z_pix = 0;
 	
 	// memset(mt->gr.img->pixels, 200, mt->gr.img->width * mt->gr.img->height * BPP);
 
