@@ -168,7 +168,26 @@ int main(int ac, char **av)
 	mt->scene.camera.direction.y = 0.0;
 	mt->scene.camera.direction.z = -1.0;
 	mt->scene.camera.fov = 80.0;
-	
+
+	// Experiment 
+
+
+	// mt->scene.camera.origin = new_vec(0, 0, 0);
+	// t_vector cam_target = new_vec(0, 0, 0);
+
+	// mt->scene.camera.direction = sub_vec(mt->scene.camera.origin,cam_target);
+	// normalize_vec(&mt->scene.camera.direction);
+
+	// t_vector upwards = new_vec(0, 1, 0); // up vector that points upwards (in world space)
+	// t_vector cam_right = cross_prod_vec(upwards, mt->scene.camera.direction);
+	// normalize_vec(&cam_right);
+	// t_vector cam_up = cross_prod_vec(mt->scene.camera.direction, cam_right);
+
+
+
+
+
+
 	//No color in mandatory part
 	mt->scene.light.bright = 0.9;
 	mt->scene.light.coord.x = 0.0;
@@ -198,7 +217,7 @@ int main(int ac, char **av)
 		error();
 	mlx_loop_hook(mt->gr.mlx, hook, mt);
 	mlx_resize_hook(mt->gr.mlx, resize, mt);	 // 
-	// mlx_scroll_hook(mt->gr.mlx, scrollhook, mt);
+	mlx_scroll_hook(mt->gr.mlx, scrollhook, mt);
 	mlx_loop(mt->gr.mlx);
 	mlx_delete_image(mt->gr.mlx, mt->gr.img);
 	mlx_terminate(mt->gr.mlx);

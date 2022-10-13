@@ -157,6 +157,7 @@ void		m_error(void); // mlx error
 
 void    	draw_scene(t_minirt *mt);
 void		hook(void *param);
+void		scrollhook(double xdelta, double ydelta, void* param);
 void 		resize(int32_t width, int32_t height, void* param);
 
 t_vector    new_vec(float x, float y, float z);
