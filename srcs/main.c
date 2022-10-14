@@ -167,26 +167,11 @@ int main(int ac, char **av)
 	mt->scene.camera.direction.x = 0.0;
 	mt->scene.camera.direction.y = 0.0;
 	mt->scene.camera.direction.z = -1.0;
-	mt->scene.camera.fov = 80.0;
+	mt->scene.camera.fov = 100.0;
 
-	// Experiment 
+	// Matrix 
 
-
-	// mt->scene.camera.origin = new_vec(0, 0, 0);
-	// t_vector cam_target = new_vec(0, 0, 0);
-
-	// mt->scene.camera.direction = sub_vec(mt->scene.camera.origin,cam_target);
-	// normalize_vec(&mt->scene.camera.direction);
-
-	// t_vector upwards = new_vec(0, 1, 0); // up vector that points upwards (in world space)
-	// t_vector cam_right = cross_prod_vec(upwards, mt->scene.camera.direction);
-	// normalize_vec(&cam_right);
-	// t_vector cam_up = cross_prod_vec(mt->scene.camera.direction, cam_right);
-
-
-
-
-
+	//
 
 	//No color in mandatory part
 	mt->scene.light.bright = 0.9;
@@ -199,16 +184,13 @@ int main(int ac, char **av)
 	
 	// Check for the negative degree
 	mt->vp.aspect_ratio = (float)mt->width / (float)mt->height;
-
-	// printf("Aspect ratio: %f\n", mt->vp.aspect_ratio);
-
-	mt->vp.height = tanf(mt->scene.camera.fov * 0.5 * (M_PI / 180)); // Vertical FOV
-	mt->vp.width = mt->vp.height * mt->vp.aspect_ratio; // tanf(mt->scene.camera.fov * 0.5 * (M_PI / 180)) * mt->vp.aspect_ratio
-	// mt->vp.x_pix = mt->vp.width / mt->width;
-	// mt->vp.y_pix = mt->vp.height / mt->height;
-	mt->vp.x_pix = 0;
-	mt->vp.y_pix = 0;
-	mt->vp.z_pix = 0;
+	mt->vp.height = tanf(mt->scene.camera.fov * 0.5 * (M_PI / 180));
+	mt->vp.width = mt->vp.height * mt->vp.aspect_ratio;
+	mt->vp.x_pix = mt->vp.width / mt->width;
+	mt->vp.y_pix = mt->vp.height / mt->height;
+	// mt->vp.x_pix = 0;
+	// mt->vp.y_pix = 0;
+	// mt->vp.z_pix = 0;
 	
 	// memset(mt->gr.img->pixels, 200, mt->gr.img->width * mt->gr.img->height * BPP);
 
@@ -216,7 +198,7 @@ int main(int ac, char **av)
 	if (mlx_image_to_window(mt->gr.mlx, mt->gr.img, 0, 0) < 0)
 		error();
 	mlx_loop_hook(mt->gr.mlx, hook, mt);
-	mlx_resize_hook(mt->gr.mlx, resize, mt);	 // 
+	mlx_resize_hook(mt->gr.mlx, resize, mt);
 	mlx_scroll_hook(mt->gr.mlx, scrollhook, mt);
 	mlx_loop(mt->gr.mlx);
 	mlx_delete_image(mt->gr.mlx, mt->gr.img);

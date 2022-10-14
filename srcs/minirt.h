@@ -53,6 +53,17 @@ typedef struct s_camera
 	float       fov;
 }	t_camera;
 
+// typedef struct s_camera
+// {
+// 	t_vector    origin;
+// 	t_vector    direction;
+// 	float       fov;
+// 	t_vector	norm;
+// 	t_vector	upwards;
+// 	t_vector	up;
+// 	t_vector	right;
+// }	t_camera;
+
 typedef struct s_light
 {
 	t_vector	coord;
@@ -88,7 +99,6 @@ typedef struct s_dist
 	float		dist;
 	float		min_dist;
 	size_t		closest_obj;
-	// size_t	n_obj;
 	t_sphere	*cl_sp;
 	t_plane		*cl_pl;
 	t_cylinder	*cl_cy;
@@ -98,11 +108,8 @@ typedef struct s_dist
 typedef	struct	s_obj
 {
 	t_list	*sphere;
-	// size_t  n_sp;
 	t_list	*plane;
-	// size_t  n_pl;
 	t_list	*cylinder;
-	// size_t  n_cy;
 }	t_obj;
 
 typedef struct s_scene
@@ -123,6 +130,15 @@ typedef struct s_draw
 	float		y_ray;
 	t_vector	*ray;
 }	t_draw;
+
+// typedef struct s_vp
+// {
+// 	float   width;
+// 	float   height;
+// 	float   x_pix;
+// 	float   y_pix;
+// 	float   aspect_ratio;
+// }   t_vp;
 
 typedef struct s_vp
 {
