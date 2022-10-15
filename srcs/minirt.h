@@ -15,9 +15,6 @@
 # include "./../MLX42/include/MLX42/MLX42_Input.h"
 # include "./../MLX42/include/MLX42/MLX42_Int.h"
 
-// # define WIDTH 1920
-// # define HEIGHT 1080
-
 typedef struct s_vector
 {
 	float   x;
@@ -51,18 +48,10 @@ typedef struct s_camera
 	t_vector    origin;
 	t_vector    direction;
 	float       fov;
+	t_vector	up_v;
+	t_vector	right_u;
+	t_vector	forward_w;
 }	t_camera;
-
-// typedef struct s_camera
-// {
-// 	t_vector    origin;
-// 	t_vector    direction;
-// 	float       fov;
-// 	t_vector	norm;
-// 	t_vector	upwards;
-// 	t_vector	up;
-// 	t_vector	right;
-// }	t_camera;
 
 typedef struct s_light
 {
@@ -121,13 +110,12 @@ typedef struct s_scene
 
 typedef struct s_draw
 {
-	int			mlx_x; // simple counter or screen x
-	int			mlx_y; // simple counter or screen y
-	int			canvas_x;
-	int			canvas_y;
+	int			mlx_x;
+	int			mlx_y;
 	int			color;
 	float		x_ray;
 	float		y_ray;
+	float		z_ray;
 	t_vector	*ray;
 }	t_draw;
 
@@ -140,16 +128,6 @@ typedef struct s_draw
 // 	float   aspect_ratio;
 // }   t_vp;
 
-typedef struct s_vp
-{
-	float   width;
-	float   height;
-	float   x_pix;
-	float   y_pix;
-	float	z_pix;
-	float   aspect_ratio;
-}   t_vp;
-
 typedef struct s_graphic
 {
 	mlx_t		*mlx;
@@ -160,17 +138,18 @@ typedef struct s_minirt
 {
 	t_obj		obj;
 	t_scene		scene;
-	t_vp		vp;
+	// t_vp		vp;
 	t_dist		dist;
 	t_graphic	gr;
 	int32_t		width;
 	int32_t		height;
 }	t_minirt;
 
-void		error(void); // allocation 
-void		p_error(void); // parser error
-void		m_error(void); // mlx error
+void		error(void);
+void		p_error(void);
+void		m_error(void);
 
+void		calculate_camera(t_minirt *mt);
 void    	draw_scene(t_minirt *mt);
 void		hook(void *param);
 void		scrollhook(double xdelta, double ydelta, void* param);

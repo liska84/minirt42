@@ -62,6 +62,20 @@ void	init_mt(t_minirt *mt)
 	mt->gr.img = NULL;
 }
 
+void	calculate_camera(t_minirt *mt)
+{
+	t_vector	tmp;
+
+	mt->scene.camera.forward_w = mt->scene.camera.direction;
+	mult_vec(&mt->scene.camera.forward_w, -1);
+	normalize_vec(&mt->scene.camera.forward_w);
+	tmp = new_vec(0, 1, 0);
+	mt->scene.camera.right_u = cross_prod_vec(tmp, mt->scene.camera.forward_w);
+	normalize_vec(&mt->scene.camera.right_u);
+	mt->scene.camera.up_v = cross_prod_vec(mt->scene.camera.forward_w, mt->scene.camera.right_u);
+	// Add 4th rowto a matrix?
+}
+
 int main(int ac, char **av) 
 {
 	(void)av;
@@ -140,14 +154,14 @@ int main(int ac, char **av)
 	/// --- ///
 
 	t_cylinder cy;
-	cy.coordinates.x = -50.0;
+	cy.coordinates.x = -40.0;
 	cy.coordinates.y = -20;
 	cy.coordinates.z = -100;
 	// Normalized vector ! Check for the range [-1, 1]
 	cy.orientation.x = 0.0;
 	cy.orientation.y = 1.0;
 	cy.orientation.z = 0.0;
-	cy.diameter = 30.0;
+	cy.diameter = 20.0;
 	cy.height = 15.0;
 	cy.color.r = 100;
 	cy.color.g = 200;
@@ -160,18 +174,16 @@ int main(int ac, char **av)
 	mt->scene.a_light.color.g = 255;
 	mt->scene.a_light.color.b = 255;
 
-	mt->scene.camera.origin.x = 0.0;
-	mt->scene.camera.origin.y = 0.0;
-	mt->scene.camera.origin.z = 0.0;
-	// Normalized vector ! Check for the range [-1, 1]
+	mt->scene.camera.origin.x = 0;
+	mt->scene.camera.origin.y = 0;
+	mt->scene.camera.origin.z = 0;
 	mt->scene.camera.direction.x = 0.0;
 	mt->scene.camera.direction.y = 0.0;
 	mt->scene.camera.direction.z = -1.0;
-	mt->scene.camera.fov = 100.0;
+	mt->scene.camera.fov = 80.0;
 
-	// Matrix 
-
-	//
+	// calculate_camera(mt, mt->scene.camera.origin, mt->scene.camera.direction);
+	calculate_camera(mt);
 
 	//No color in mandatory part
 	mt->scene.light.bright = 0.9;
@@ -182,15 +194,12 @@ int main(int ac, char **av)
 	mt->scene.light.color.g = 255;
 	mt->scene.light.color.b = 255;
 	
-	// Check for the negative degree
-	mt->vp.aspect_ratio = (float)mt->width / (float)mt->height;
-	mt->vp.height = tanf(mt->scene.camera.fov * 0.5 * (M_PI / 180));
-	mt->vp.width = mt->vp.height * mt->vp.aspect_ratio;
-	mt->vp.x_pix = mt->vp.width / mt->width;
-	mt->vp.y_pix = mt->vp.height / mt->height;
-	// mt->vp.x_pix = 0;
-	// mt->vp.y_pix = 0;
-	// mt->vp.z_pix = 0;
+	// mt->vp.aspect_ratio = (float)mt->width / (float)mt->height;
+	// mt->vp.height = 2 * tanf(mt->scene.camera.fov * 0.5 * (M_PI / 180));
+	// mt->vp.height = tanf(mt->scene.camera.fov * 0.5 * (M_PI / 180));
+	// mt->vp.width = mt->vp.height * mt->vp.aspect_ratio;
+	// mt->vp.x_pix = mt->vp.width / mt->width;
+	// mt->vp.y_pix = mt->vp.height / mt->height;
 	
 	// memset(mt->gr.img->pixels, 200, mt->gr.img->width * mt->gr.img->height * BPP);
 

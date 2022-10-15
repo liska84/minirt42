@@ -131,67 +131,30 @@ static void draw_objects(t_minirt *mt, t_vector *ray, int *color)
 void    draw_scene(t_minirt *mt)
 {
 	t_draw		*pic;
+	float		x, y, z;
 
 	pic = malloc(sizeof(t_draw));
 	pic->mlx_y = 0;
-	pic->canvas_y = mt->height / 2;
-	while (pic->canvas_y > (-1 * mt->height / 2))
+	while (pic->mlx_y < mt->height)
 	{
-		pic->y_ray = pic->canvas_y * mt->vp.y_pix;
-		pic->canvas_x = -mt->width / 2;
 		pic->mlx_x = 0;
-		while (pic->canvas_x < mt->width / 2)
+		while (pic->mlx_x < mt->width)
 		{
-			pic->x_ray = pic->canvas_x * mt->vp.x_pix;
+			x = pic->mlx_x - mt->width / 2;
+			y = mt->height / 2 - pic->mlx_y;
+			z = -mt->height * 0.5 / tanf(mt->scene.camera.fov * 0.5 * (M_PI / 180));
+			pic->x_ray = x * mt->scene.camera.right_u.x + y * mt->scene.camera.up_v.x + z * mt->scene.camera.forward_w.x;
+			pic->y_ray = x * mt->scene.camera.right_u.y + y * mt->scene.camera.up_v.y + z * mt->scene.camera.forward_w.y;
+			pic->z_ray = x * mt->scene.camera.right_u.z + y * mt->scene.camera.up_v.z + z * mt->scene.camera.forward_w.z;
 			pic->ray = malloc(sizeof(t_vector));
-			*pic->ray = new_vec(pic->x_ray, pic->y_ray, mt->scene.camera.direction.z); // mt->scene.camera.direction.z == 1 UNIT
+			*pic->ray = new_vec(pic->x_ray, pic->y_ray, pic->z_ray);
 			normalize_vec(pic->ray);
 			draw_objects(mt, pic->ray, &pic->color);
 			free(pic->ray);
 			mlx_put_pixel(mt->gr.img, pic->mlx_x, pic->mlx_y, pic->color);
-			pic->canvas_x++;
 			pic->mlx_x++;
 		}
-		pic->canvas_y--;
 		pic->mlx_y++;
 	}
 	free(pic);
 }
-
-// void    draw_scene(t_minirt *mt)
-// {
-// 	t_draw		*pic;
-// 	t_vector	ray_orig;	
-// 	t_vector	tmp;
-
-// 	pic = malloc(sizeof(t_draw));
-// 	pic->mlx_y = 0;
-// 	while (pic->mlx_y < mt->height)
-// 	{
-// 		pic->mlx_x = 0;
-// 		while (pic->mlx_x < mt->width)
-// 		{
-// 			//  Px = (2 * ((x + 0.5) / imageWidth) - 1) * tan(fov / 2 * M_PI / 180) * imageAspectRatio;
-// 			mt->vp.x_pix = (2.0 * ((pic->mlx_x + 0.5) / mt->width) - 1) * mt->vp.width;
-// 			// Py = (1 - 2 * ((y + 0.5) / imageHeight) * tan(fov / 2 * M_PI / 180)
-// 			mt->vp.y_pix = (1 - 2.0 * ((pic->mlx_y + 0.5) / mt->height)) * mt->vp.height; // * tanf(mt->scene.camera.fov * 0.5 * (M_PI / 180));
-			
-// 			mt->vp.z_pix = - ((mt->vp.height) / tanf(mt->scene.camera.fov * 0.5 * (M_PI / 180))); // or z = -1;
-
-// 			ray_orig = mt->scene.camera.origin;
-// 			tmp = new_vec(mt->vp.x_pix, mt->vp.y_pix, mt->vp.z_pix); // z = -1	 
-			
-// 			pic->ray = malloc(sizeof(t_vector));
-			
-// 			*pic->ray = sub_vec(tmp, ray_orig);
-// 			normalize_vec(pic->ray);
-
-// 			draw_objects(mt, pic->ray, &pic->color);
-// 			free(pic->ray);
-// 			mlx_put_pixel(mt->gr.img, pic->mlx_x, pic->mlx_y, pic->color);
-// 			pic->mlx_x++;
-// 		}
-// 		pic->mlx_y++;
-// 	}
-// 	free(pic);
-// }
