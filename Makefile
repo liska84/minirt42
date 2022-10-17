@@ -11,14 +11,11 @@ SRCS =	main.c \
 		intersect.c \
 		color.c \
 		shadow.c \
-#		parser.c \
-#		exit.c \
-		parser_setting.c \
-		ft_stof.c \
-		parser_utils.c \
-		parser_figures.c \
-		free.c \
-
+		utils.c \
+		utils2.c \
+		parse_fig.c \
+		parse_scene.c \
+		parser.c \
 
 GET_NEXT_LINE_SRCS =	get_next_line.c \
 						get_next_line_utils.c \

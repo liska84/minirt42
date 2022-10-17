@@ -145,8 +145,25 @@ typedef struct s_minirt
 	int32_t		height;
 }	t_minirt;
 
+float		ft_stof(char *str);
+bool		ft_bit_range(t_color color);
+bool		ft_unit_range(t_vector vec);
+bool		ft_string_digit(char *str);
+void		free_content(void *content);
+
+void		parser(t_minirt *mt, char *argv);
+t_color		parse_color(char **line_split, int i);
+t_vector	split_coordinates(char **str, int i);
+t_scene		parse_ambi_light(t_scene scene, char **line_split);
+t_scene		parse_camera(t_scene scene, char **line_split);
+t_scene		parse_light(t_scene scene, char **line_split);
+t_obj		parse_cylinder(t_obj obj, char **line_split);
+t_obj		parse_plane(t_obj obj, char **line_split);
+t_obj		parse_sphere(t_obj object, char **line_split);
+
 void		error(void);
 void		p_error(void);
+void		msg_error(char *msg, char **line_split);
 void		m_error(void);
 
 void		calculate_camera(t_minirt *mt);
