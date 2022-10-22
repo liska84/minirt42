@@ -14,7 +14,7 @@ int	set_color(t_minirt *mt, t_dist *dist, float light)
 	float	tmp;
 
 	tmp = mt->scene.a_light.color.r * mt->scene.a_light.ratio + light * mt->scene.light.bright * 255.00f;
-	if (tmp > 255.0)
+	if (ft_compare_float(tmp, 255.0) > 0)
 		tmp = 255.0;
 	if (dist->closest_obj == 1)
 		r = dist->cl_sp->color.r * tmp / 255.0;
@@ -23,7 +23,7 @@ int	set_color(t_minirt *mt, t_dist *dist, float light)
 	else if (dist->closest_obj >= 3)
 		r = dist->cl_cy->color.r * tmp / 255.0;
 	tmp = mt->scene.a_light.color.g * mt->scene.a_light.ratio + light * mt->scene.light.bright * 255.00f;
-	if (tmp > 255.0)
+	if (ft_compare_float(tmp, 255.0) > 0)
 		tmp = 255.0;
 	if (dist->closest_obj == 1)
 		g = dist->cl_sp->color.g * tmp / 255.0;
@@ -32,7 +32,7 @@ int	set_color(t_minirt *mt, t_dist *dist, float light)
 	else if (dist->closest_obj >= 3)
 		g = dist->cl_cy->color.g * tmp / 255.0;
 	tmp = mt->scene.a_light.color.b * mt->scene.a_light.ratio + light * mt->scene.light.bright * 255.00f;
-	if (tmp > 255.0)
+	if (ft_compare_float(tmp, 255.0) > 0)
 		tmp = 255.0;
 	if (dist->closest_obj == 1)
 		b = dist->cl_sp->color.b * tmp / 255.0;

@@ -12,13 +12,13 @@ float sphere_intersect(t_camera cam, t_vector ray, t_sphere *sp)
 	coef.b = 2 * scalar_vec(cam_sp, ray);
 	coef.c = scalar_vec(cam_sp, cam_sp) - pow(sp->diam / 2, 2);
 	coef.disc = pow(coef.b, 2) - 4.0 * coef.a * coef.c;
-	if (coef.disc < 0.0)
+	if (ft_compare_float(coef.disc, 0) < 0)
 		return (0);
 	d1 = (-1 * coef.b - sqrt(coef.disc)) / 2 * coef.a;
 	d2 = (-1 * coef.b + sqrt(coef.disc)) / 2 * coef.a;
-	if (d1 > 0.0)
+	if (ft_compare_float(d1, 0) > 0)
 		return (d1);
-	else if (d2 > 0.0)
+	else if (ft_compare_float(d2, 0) > 0)
 		return (d2);
 	return (0);
 }
@@ -32,11 +32,11 @@ float plane_intersect(t_camera cam, t_vector ray, t_plane *pl)
 
 	c = scalar_vec(pl->orientation, ray);
 	d = sub_vec(pl->coord, cam.origin);
-	if (c != 0)
+	if (ft_compare_float(c, 0) != 0)
 	{
 		pn = scalar_vec(d, pl->orientation);
 		dist = pn / c;
-		if (dist < 0)
+		if (ft_compare_float(dist, 0) < 0)
 			return (0);
 		return (dist);
 	}
@@ -59,15 +59,15 @@ static void body_intersect(t_camera cam, t_vector ray, t_cylinder *cy, float *mi
 	coef.c = scalar_vec(cam_cy, cam_cy) -
 			pow(scalar_vec(cam_cy, cy->orientation), 2) - pow(cy->diameter / 2, 2);
 	coef.disc = pow(coef.b, 2) - 4.0f * coef.a * coef.c;
-	if (coef.disc >= 0.0)
+	if (ft_compare_float(coef.disc, 0) >= 0.0)
 	{
 		d1 = (-1 * coef.b - sqrt(coef.disc)) / (2 * coef.a);
 		d2 = (-1 * coef.b + sqrt(coef.disc)) / (2 * coef.a);
 		m = scalar_vec(ray, cy->orientation) * d1 - scalar_vec(cam_cy, cy->orientation);
-		if (d1 > 0.0 && m >= 0.0 && m <= cy->height && d1 < d2)
+		if (ft_compare_float(d1, 0) > 0 && ft_compare_float(m, 0) >= 0 && ft_compare_float(m, cy->height) <= 0 && ft_compare_float(d1, d2) < 0)
 			*min_d = d1;
 		m = scalar_vec(ray, cy->orientation) * d2 - scalar_vec(cam_cy, cy->orientation);
-		if (d2 > 0.0 && m >= 0.0 && m <= cy->height && min_d < 0)
+		if (ft_compare_float(d2, 0) > 0 && ft_compare_float(m, 0) >= 0 && ft_compare_float(m, cy->height) <= 0 && ft_compare_float(*min_d, 0) < 0)
 			*min_d = d2;
 	}
 }
@@ -80,7 +80,7 @@ static float	cap_intersect(t_camera cam, t_vector ray, t_plane *pl, float radius
 	float		dist;
 
 	t = plane_intersect(cam, ray, pl);
-	if (t == 0.0)
+	if (ft_compare_float(t, 0) == 0.0)
 		return (0);
 	else
 	{
@@ -88,7 +88,7 @@ static float	cap_intersect(t_camera cam, t_vector ray, t_plane *pl, float radius
 		p = add_vec(cam.origin, ray);
 		v = sub_vec(p, pl->coord);
 		dist = sqrt(scalar_vec(v, v));
-		if ((p.x == pl->coord.x && p.y == pl->coord.y && p.z == pl->coord.z) || dist <= radius)
+		if ((ft_compare_float(p.x, pl->coord.x) == 0 && ft_compare_float(p.y, pl->coord.y) == 0 && ft_compare_float(p.z, pl->coord.z) == 0) || ft_compare_float(dist, radius) <= 0)
 			return (t);
 	}
 	return (0);
@@ -96,13 +96,13 @@ static float	cap_intersect(t_camera cam, t_vector ray, t_plane *pl, float radius
 
 static void	get_near(t_dist *dist, float min_d, float *d_cap, t_cylinder *cy)
 {
-	if (min_d < dist->min_dist)
+	if (ft_compare_float(min_d, dist->min_dist) < 0)
 	{
 		dist->min_dist = min_d;
 		dist->closest_obj = 3;
-		if (min_d == d_cap[0])
+		if (ft_compare_float(min_d, d_cap[0]) == 0)
 			dist->closest_obj = 4;
-		if (min_d == d_cap[1])
+		if (ft_compare_float(min_d, d_cap[1]) == 0)
 			dist->closest_obj = 5;
 		dist->cl_cy = cy;
 	}
@@ -121,15 +121,15 @@ float	cy_intersect(t_minirt *mt, t_vector ray, t_dist *dist, t_cylinder *cy)
 	pl.orientation = cy->orientation;
 	pl.color = cy->color;
 	d_cap[0] = cap_intersect(mt->scene.camera, ray, &pl, cy->diameter / 2);
-	if (d_cap[0] > 0.0 && d_cap[0] < min_d)
+	if (ft_compare_float(d_cap[0], 0) > 0 && ft_compare_float(d_cap[0], min_d) < 0)
 		min_d = d_cap[0];
 	d2 = cy->orientation;
 	mult_vec(&d2, cy->height);
 	pl.coord = add_vec(cy->coordinates, d2);
 	d_cap[1] = cap_intersect(mt->scene.camera, ray, &pl, cy->diameter / 2);
-	if (d_cap[1] > 0.0 && d_cap[1] < min_d)
+	if (ft_compare_float(d_cap[1], 0) > 0 && ft_compare_float(d_cap[1], min_d) < 0)
 		min_d = d_cap[1];
-	if (min_d > 0.0 && min_d != INFINITY)
+	if (ft_compare_float(min_d, 0) > 0 && min_d != INFINITY)
 	{
 		// 	dist->min_dist = min_d;
 		// 	dist->closest_obj = 3; // Body
