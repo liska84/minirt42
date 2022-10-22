@@ -146,13 +146,11 @@ typedef struct s_minirt
 	int32_t		height;
 }	t_minirt;
 
-<<<<<<< HEAD
 void	error(void); // allocation 
 void	p_error(void); // parser error
 void	m_error(void); // mlx error
 void	msg_error(char *msg, char **split);
 
-=======
 float		ft_stof(char *str);
 bool		ft_bit_range(t_color color);
 bool		ft_unit_range(t_vector vec);
@@ -175,7 +173,6 @@ void		msg_error(char *msg, char **line_split);
 void		m_error(void);
 
 void		calculate_camera(t_minirt *mt);
->>>>>>> 6d723b4a271a671320587ce55204857424008cfc
 void    	draw_scene(t_minirt *mt);
 void		hook(void *param);
 void		scrollhook(double xdelta, double ydelta, void* param);

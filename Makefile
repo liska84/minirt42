@@ -13,19 +13,9 @@ SRCS =	main.c \
 		shadow.c \
 		parser.c \
 		parser_scene.c \
-		parser_utils.c \
 		ft_stof.c \
 		parser_figures.c \
-#		exit.c \
-		parser_setting.c \
-		parser_utils.c \
-		free.c \
-
 		utils.c \
-		utils2.c \
-		parse_fig.c \
-		parse_scene.c \
-		parser.c \
 
 GET_NEXT_LINE_SRCS =	get_next_line.c \
 						get_next_line_utils.c \

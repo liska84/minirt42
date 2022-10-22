@@ -21,7 +21,7 @@ void scrollhook(double xdelta, double ydelta, void* param)
 		mt->scene.camera.fov = 1.0;
 	else if (mt->scene.camera.fov > 180.0)
 		mt->scene.camera.fov = 180.0;
-	printf("FOV: %f\n", mt->scene.camera.fov);
+	printf("FOV: %d\n", mt->scene.camera.fov);
 	draw_scene(mt);
 }
 

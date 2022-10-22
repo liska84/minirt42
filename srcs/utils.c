@@ -1,86 +1,60 @@
 #include "minirt.h"
 
-//convert string to float
-static long	ft_power(int base, int exponent)
+bool ft_bit_range(t_color color)
 {
-	long	power;
-
-	power = 1;
-	while (exponent > 0)
-	{
-		power = power * base;
-		exponent--;
-	}
-	return (power);
+    if (color.r < 0 || color.r > 255)
+        return (false);
+    else if (color.g < 0 || color.g > 255)
+        return (false);
+    else if (color.b < 0 || color.b > 255)
+        return (false);
+    else
+        return (true);
 }
 
-bool	ft_string_digit(char *str)
+//this should also look for normalized??
+bool ft_unit_range(t_vector vec)
 {
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (!ft_isdigit(str[i]) && str[i] != '\n')
-			return (false);
-		i++;
-	}
-	return (true);
+    if (ft_f_less_f(vec.x, -1.0) || ft_f_greater_f(vec.x, 1.0))
+        return (false);
+    else if (ft_f_less_f(vec.y, -1.0) || ft_f_greater_f(vec.y, 1.0))
+        return (false);
+    else if (ft_f_less_f(vec.z, -1.0) || ft_f_greater_f(vec.z, 1.0))
+        return (false);
+    else if (vec.x * vec.x + vec.y * vec.y + vec.z * vec.z != 1)
+        normalize_vec(&vec);
+    return (true);
 }
 
-static float	ft_convert(int deci_places, char *tmp, char *tmp2)
+t_color parse_color(char **line_split, int i)
 {
-	float	result;
-	long	power;
-	int		int1;
-	int		int2;
+   	t_color color;
+    char **split_colors;
 
-	if (!ft_string_digit(tmp2))
-	{
-		ft_free(tmp);
-		ft_free(tmp2);
-		msg_error("Float input is wrong", NULL);
-	}
-	int1 = ft_atoi(tmp);
-	int2 = ft_atoi(tmp2);
-	power = int1 * ft_power(10, deci_places);
-	if (power >= 0)
-		power = power + int2;
-	else
-		power = power - int2;
-	result = (float)power / (float)(ft_power(10, deci_places));
-	if (ft_strncmp(tmp, "-0", 2) == 0)
-		result = -result;
-	ft_free(tmp);
-	ft_free(tmp2);
-	return (result);
+    split_colors = ft_split(line_split[i], ',');
+    if (!split_colors[0] || !split_colors[1] || !split_colors[2] || split_colors[3])
+    {
+        ft_split_del(&split_colors);
+        msg_error("Not the right color input", line_split);
+    }
+    color.r = ft_atoi(split_colors[0]);
+    color.g = ft_atoi(split_colors[1]);
+    color.b = ft_atoi(split_colors[2]);
+    ft_split_del(&split_colors);
+    return (color);
 }
 
-float	ft_stof(char *str)
+t_vector split_coordinates(char **str, int i)
 {
-	int		deci_sepa;
-	int		i;
-	char	*tmp;
-	char	*tmp2;
+    char 		**split_coord;
+    t_vector 	coordinates;
 
-	i = 0;
-	deci_sepa = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '.')
-		{
-			deci_sepa = i;
-			break ;
-		}
-		i++;
-	}
-	if (str[i] == '\0')
-	{
-		tmp2 = ft_strdup("0");
-		deci_sepa = i;
-	}
-	else
-		tmp2 = ft_substr(str, deci_sepa + 1, ft_strlen(str) - deci_sepa);
-	tmp = ft_substr(str, 0, deci_sepa);
-	return (ft_convert(ft_strlen(tmp2), tmp, tmp2));
+    split_coord = ft_split(str[i], ',');
+    if (!split_coord[0] || !split_coord[1] || !split_coord[2] || split_coord[3])
+        msg_error("Wrong coordinates input", str);
+    coordinates.x = ft_stof(split_coord[0]);
+    coordinates.y = ft_stof(split_coord[1]);
+    coordinates.z = ft_stof(split_coord[2]);
+    ft_split_del(&split_coord);
+    return (coordinates);
 }
