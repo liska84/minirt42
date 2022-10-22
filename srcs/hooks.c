@@ -6,7 +6,6 @@ void scrollhook(double xdelta, double ydelta, void* param)
 
 	(void)xdelta;
 	mt = param;
-	printf("ydelta %f\n", ydelta);
 	if (ydelta > 0)
 	{
 		printf("Zoom out!");
@@ -32,7 +31,7 @@ void resize(int32_t width, int32_t height, void* param)
 	mt = param;
 	mt->height = height;
 	mt->width = width;
-	printf("Aspect ratio: %f\n", (double)mt->width / (double)mt->height);
+	// printf("Aspect ratio: %f\n", (double)mt->width / (double)mt->height);
 	draw_scene(mt);
 }
 
@@ -127,8 +126,8 @@ void	hook(void *param)
 		rotate_cam_y(mt, 0.2);
 	if (mlx_is_key_down(mt->gr.mlx, MLX_KEY_F))
 		rotate_cam_y(mt, -0.2);
-	if (mlx_is_key_down(mt->gr.mlx, MLX_KEY_T))
-		rotate_cam_x(mt, 0.1);
-	if (mlx_is_key_down(mt->gr.mlx, MLX_KEY_G))
-		rotate_cam_x(mt, -0.1);
+	// if (mlx_is_key_down(mt->gr.mlx, MLX_KEY_T))
+	// 	rotate_cam_x(mt, 0.4);
+	// if (mlx_is_key_down(mt->gr.mlx, MLX_KEY_G))
+	// 	rotate_cam_x(mt, -0.4);
 }
