@@ -10,7 +10,9 @@ static void	closest_sp(t_minirt *mt, t_dist *dist, t_vector *ray)
 	{
 		sp = ptr->content;
 		dist->dist = sphere_intersect(mt->scene.camera, *ray, sp);
-		if (ft_compare_float(dist->dist, 0) > 0 && ft_compare_float(dist->dist, dist->min_dist) > 0)
+		// printf("Dist from intersect %f\n", dist->dist);
+
+		if (ft_compare_float(dist->dist, 0) > 0 && ft_compare_float(dist->dist, dist->min_dist) < 0)
 		{
 			dist->min_dist = dist->dist;
 			dist->closest_obj = 1;
@@ -54,7 +56,7 @@ static void	closest_cy(t_minirt *mt, t_dist *dist, t_vector *ray)
 	}
 }
 
-static void	dot_normal_cylind(t_dist *dist, t_vector *dot, t_vector *normal) //t_minirt *mt, 
+static void	dot_normal_cylind(t_dist *dist, t_vector *dot, t_vector *normal)
 {
 	float		n;
 	t_vector	tmp;
@@ -69,7 +71,7 @@ static void	dot_normal_cylind(t_dist *dist, t_vector *dot, t_vector *normal) //t
 	normalize_vec(dist->dot_light);
 }
 
-static float	dot_normal(t_dist *dist, t_vector *dot) //t_minirt *mt, 
+static float	dot_normal(t_dist *dist, t_vector *dot)
 {
 	t_vector	*normal;
 	float		int_light;
@@ -89,7 +91,7 @@ static float	dot_normal(t_dist *dist, t_vector *dot) //t_minirt *mt,
 	int_light = scalar_vec(*dist->dot_light, *normal) / (len_vec(*dist->dot_light) * len_vec(*normal));
 	free(normal);
 	if (ft_compare_float(int_light, 0) < 0)
-		int_light = 0;
+		int_light = 0.0;
 	return (int_light);
 }
 
