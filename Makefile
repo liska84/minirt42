@@ -59,8 +59,8 @@ $(NAME): ${LIBFT} $(OBJS)
 	$(CC) $(CFLAGS) -c $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) $(addprefix $(SRCS_PATH), $(SRCS))
 	@mv *.o $(OBJS_PATH)
 #	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) ${LIBFT_PATH}libft.a -o $(NAME) -I $(MLX_PATH)
-#	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) ${LIBFT_PATH}libft.a -o $(NAME) ./MLX42/libmlx42.a -I include -lglfw -L "/Users/kmorunov/.brew/opt/glfw/lib/"
-	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) ${LIBFT_PATH}libft.a -o $(NAME) ./MLX42/libmlx42.a -I include -lglfw -L "/usr/local/Cellar/glfw/3.3.8/lib/"
+	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) ${LIBFT_PATH}libft.a -o $(NAME) ../MLX42/libmlx42.a -I include -lglfw -L "/Users/kmorunov/.brew/opt/glfw/lib/"
+#	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) ${LIBFT_PATH}libft.a -o $(NAME) ./MLX42/libmlx42.a -I include -lglfw -L "/usr/local/Cellar/glfw/3.3.8/lib/"
 
 clean:
 			make clean -C $(LIBFT_PATH)

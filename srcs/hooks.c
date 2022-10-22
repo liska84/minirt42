@@ -122,8 +122,7 @@ void	hook(void *param)
 	if (mlx_is_key_down(mt->gr.mlx, MLX_KEY_D))
 		move_cam_z(mt, -1);
 
-	// Camera direction - TO THINK!
-
+	// Camera direction
 	if (mlx_is_key_down(mt->gr.mlx, MLX_KEY_R))
 		rotate_cam_y(mt, 0.2);
 	if (mlx_is_key_down(mt->gr.mlx, MLX_KEY_F))

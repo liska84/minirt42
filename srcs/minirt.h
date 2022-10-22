@@ -11,9 +11,9 @@
 // # include "../minilibx/mlx.h"
 # include "../includes/libft/libft.h"
 # include "../includes/get_next_line/get_next_line.h"
-# include "./../MLX42/include/MLX42/MLX42.h"
-# include "./../MLX42/include/MLX42/MLX42_Input.h"
-# include "./../MLX42/include/MLX42/MLX42_Int.h"
+# include "../..//MLX42/include/MLX42/MLX42.h"
+# include "../../MLX42/include/MLX42/MLX42_Input.h"
+# include "../../MLX42/include/MLX42/MLX42_Int.h"
 
 typedef struct s_vector
 {
