@@ -47,7 +47,8 @@ typedef struct s_camera
 {
 	t_vector    origin;
 	t_vector    direction;
-	float       fov;
+	int		    fov;
+	// float       fov; int or float?
 	t_vector	up_v;
 	t_vector	right_u;
 	t_vector	forward_w;
@@ -145,8 +146,30 @@ typedef struct s_minirt
 	int32_t		height;
 }	t_minirt;
 
+void	error(void); // allocation 
+void	p_error(void); // parser error
+void	m_error(void); // mlx error
+void	msg_error(char *msg, char **split);
+
+float		ft_stof(char *str);
+bool		ft_bit_range(t_color color);
+bool		ft_unit_range(t_vector vec);
+bool		ft_string_digit(char *str);
+void		free_content(void *content);
+
+void		parser(t_minirt *mt, char *argv);
+t_color		parse_color(char **line_split, int i);
+t_vector	split_coordinates(char **str, int i);
+t_scene		parse_ambi_light(t_scene scene, char **line_split);
+t_scene		parse_camera(t_scene scene, char **line_split);
+t_scene		parse_light(t_scene scene, char **line_split);
+t_obj		parse_cylinder(t_obj obj, char **line_split);
+t_obj		parse_plane(t_obj obj, char **line_split);
+t_obj		parse_sphere(t_obj object, char **line_split);
+
 void		error(void);
 void		p_error(void);
+void		msg_error(char *msg, char **line_split);
 void		m_error(void);
 
 void		calculate_camera(t_minirt *mt);
@@ -175,5 +198,23 @@ int			get_rgba(int r, int g, int b, int a);
 int			shadow_sphere(t_minirt *mt, t_dist *dist, t_vector *ray);
 int			shadow_plane(t_minirt *mt, t_dist *dist, t_vector *ray);
 int			shadow_cylinder(t_minirt *mt, t_dist *dist, t_vector *ray);
+
+// parser.c
+void		parser(t_minirt *mt, char *av);
+t_scene 	parse_ambi_light(t_scene scene, char **line_split);
+t_scene 	parse_camera(t_scene scene, char **line_split);
+t_scene 	parse_light(t_scene scene, char **line_split);
+
+t_obj parse_sphere(t_obj object, char **line_split);
+t_obj parse_plane(t_obj obj, char **line_split);
+t_obj parse_cylinder(t_obj obj, char **line_split);
+
+bool 		ft_bit_range(t_color color);
+t_vector 	split_coordinates(char **str, int i);
+t_color		parse_color(char **line_split, int i);
+bool 		ft_unit_range(t_vector vec);
+
+float	ft_stof(char *str);
+bool	ft_string_digit(char *str);
 
 #endif
