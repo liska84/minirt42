@@ -62,7 +62,7 @@ void parser(t_minirt *mt, char *argv)
 		p_error();
 	mt = readfile(mt, fd);
 	// Ask if any of A L C is NOT in the rt file!!
-	if (mt->scene.camera.fov == -1 || mt->scene.a_light.ratio == -1.0 || mt->scene.light.bright == -1.0)
+	if (mt->scene.camera.fov == -1 || ft_compare_float(mt->scene.a_light.ratio, -1.0) == 0 || ft_compare_float(mt->scene.light.bright, -1.0) == 0)
 		p_error();
 	close(fd);
 }

@@ -2,7 +2,9 @@
 
 t_scene parse_ambi_light(t_scene scene, char **line_split)
 {
-	if (scene.a_light.ratio != -1.0)
+	printf("%f\n", scene.a_light.ratio);
+	printf("%f\n", ft_compare_float(scene.a_light.ratio, -1.0));
+	if (ft_compare_float(scene.a_light.ratio, -1.0) != 0)
 		msg_error("A was declared more than once", line_split);
 	if (line_split[3] && ft_strncmp(line_split[3], "\n", 1) == 0);
 	else if (!line_split[1] || !line_split[2] || line_split[3])
@@ -35,7 +37,7 @@ t_scene parse_camera(t_scene scene, char **line_split)
 
 t_scene parse_light(t_scene scene, char **line_split)
 {
-	if (ft_compare_float(-1, scene.light.bright) == 0)
+	if (ft_compare_float(-1, scene.light.bright) != 0)
 		msg_error("L was declared more than once", line_split);
 	if (line_split[4] && ft_strncmp(line_split[4], "\n", 1) == 0);
 	else if (!line_split[3] || line_split[4])
