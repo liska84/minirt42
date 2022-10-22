@@ -12,10 +12,18 @@ float sphere_intersect(t_camera cam, t_vector ray, t_sphere *sp)
 	coef.b = 2 * scalar_vec(cam_sp, ray);
 	coef.c = scalar_vec(cam_sp, cam_sp) - pow(sp->diam / 2, 2);
 	coef.disc = pow(coef.b, 2) - 4.0 * coef.a * coef.c;
-	if (ft_compare_float(coef.disc, 0) < 0)
+
+	float a = ft_compare_float(coef.disc, 0.0f);
+	// printf("----------------a: %f\n", a);
+	if ( a < 0)
+	{
 		return (0);
+	}
 	d1 = (-1 * coef.b - sqrt(coef.disc)) / 2 * coef.a;
 	d2 = (-1 * coef.b + sqrt(coef.disc)) / 2 * coef.a;
+
+	// printf("d1: %f, d2: %f\n", d1, d2);
+
 	if (ft_compare_float(d1, 0) > 0)
 		return (d1);
 	else if (ft_compare_float(d2, 0) > 0)
