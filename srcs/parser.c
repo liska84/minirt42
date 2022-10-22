@@ -1,7 +1,6 @@
-
 #include "minirt.h"
 
-t_minirt *in_scene(t_minirt *mt, char **split_line)
+static t_minirt *in_scene(t_minirt *mt, char **split_line)
 {
 	if (ft_strncmp(split_line[0], "A", 2) == 0)
 		mt->scene = parse_ambi_light(mt->scene, split_line);
@@ -24,7 +23,7 @@ t_minirt *in_scene(t_minirt *mt, char **split_line)
 	return (mt);
 }
 
-t_minirt *readfile(t_minirt *mt, int fd)
+static t_minirt *readfile(t_minirt *mt, int fd)
 {
 	char 	*line;
 	char 	*tmp;

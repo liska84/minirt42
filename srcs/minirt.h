@@ -15,9 +15,6 @@
 # include "./../MLX42/include/MLX42/MLX42_Input.h"
 # include "./../MLX42/include/MLX42/MLX42_Int.h"
 
-// # define WIDTH 1920
-// # define HEIGHT 1080
-
 typedef struct s_vector
 {
 	float   x;
@@ -51,6 +48,10 @@ typedef struct s_camera
 	t_vector    origin;
 	t_vector    direction;
 	int		    fov;
+	// float       fov; int or float?
+	t_vector	up_v;
+	t_vector	right_u;
+	t_vector	forward_w;
 }	t_camera;
 
 typedef struct s_light
@@ -88,7 +89,6 @@ typedef struct s_dist
 	float		dist;
 	float		min_dist;
 	size_t		closest_obj;
-	// size_t	n_obj;
 	t_sphere	*cl_sp;
 	t_plane		*cl_pl;
 	t_cylinder	*cl_cy;
@@ -98,11 +98,8 @@ typedef struct s_dist
 typedef	struct	s_obj
 {
 	t_list	*sphere;
-	// size_t  n_sp;
 	t_list	*plane;
-	// size_t  n_pl;
 	t_list	*cylinder;
-	// size_t  n_cy;
 }	t_obj;
 
 typedef struct s_scene
@@ -114,24 +111,23 @@ typedef struct s_scene
 
 typedef struct s_draw
 {
-	int			mlx_x; // simple counter or screen x
-	int			mlx_y; // simple counter or screen y
-	int			canvas_x;
-	int			canvas_y;
+	int			mlx_x;
+	int			mlx_y;
 	int			color;
 	float		x_ray;
 	float		y_ray;
+	float		z_ray;
 	t_vector	*ray;
 }	t_draw;
 
-typedef struct s_vp
-{
-	float   width;
-	float   height;
-	float   x_pix;
-	float   y_pix;
-	float   aspect_ratio;
-}   t_vp;
+// typedef struct s_vp
+// {
+// 	float   width;
+// 	float   height;
+// 	float   x_pix;
+// 	float   y_pix;
+// 	float   aspect_ratio;
+// }   t_vp;
 
 typedef struct s_graphic
 {
@@ -143,20 +139,46 @@ typedef struct s_minirt
 {
 	t_obj		obj;
 	t_scene		scene;
-	t_vp		vp;
+	// t_vp		vp;
 	t_dist		dist;
 	t_graphic	gr;
 	int32_t		width;
 	int32_t		height;
 }	t_minirt;
 
+<<<<<<< HEAD
 void	error(void); // allocation 
 void	p_error(void); // parser error
 void	m_error(void); // mlx error
 void	msg_error(char *msg, char **split);
 
+=======
+float		ft_stof(char *str);
+bool		ft_bit_range(t_color color);
+bool		ft_unit_range(t_vector vec);
+bool		ft_string_digit(char *str);
+void		free_content(void *content);
+
+void		parser(t_minirt *mt, char *argv);
+t_color		parse_color(char **line_split, int i);
+t_vector	split_coordinates(char **str, int i);
+t_scene		parse_ambi_light(t_scene scene, char **line_split);
+t_scene		parse_camera(t_scene scene, char **line_split);
+t_scene		parse_light(t_scene scene, char **line_split);
+t_obj		parse_cylinder(t_obj obj, char **line_split);
+t_obj		parse_plane(t_obj obj, char **line_split);
+t_obj		parse_sphere(t_obj object, char **line_split);
+
+void		error(void);
+void		p_error(void);
+void		msg_error(char *msg, char **line_split);
+void		m_error(void);
+
+void		calculate_camera(t_minirt *mt);
+>>>>>>> 6d723b4a271a671320587ce55204857424008cfc
 void    	draw_scene(t_minirt *mt);
 void		hook(void *param);
+void		scrollhook(double xdelta, double ydelta, void* param);
 void 		resize(int32_t width, int32_t height, void* param);
 
 t_vector    new_vec(float x, float y, float z);
