@@ -23,6 +23,11 @@ void	normalize_vec(t_vector *v)
 	float	length;
 
 	length = len_vec(*v);
+	if (length == 0)
+	{
+		v->x = 1.0;
+		return ;
+	}
 	v->x /= length;
 	v->y /= length;
 	v->z /= length;

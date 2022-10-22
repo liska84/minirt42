@@ -50,7 +50,7 @@ typedef struct s_camera
 {
 	t_vector    origin;
 	t_vector    direction;
-	float       fov;
+	int		    fov;
 }	t_camera;
 
 typedef struct s_light
@@ -153,6 +153,7 @@ typedef struct s_minirt
 void	error(void); // allocation 
 void	p_error(void); // parser error
 void	m_error(void); // mlx error
+void	msg_error(char *msg, char **split);
 
 void    	draw_scene(t_minirt *mt);
 void		hook(void *param);
@@ -178,5 +179,23 @@ int			get_rgba(int r, int g, int b, int a);
 int			shadow_sphere(t_minirt *mt, t_dist *dist, t_vector *ray);
 int			shadow_plane(t_minirt *mt, t_dist *dist, t_vector *ray);
 int			shadow_cylinder(t_minirt *mt, t_dist *dist, t_vector *ray);
+
+// parser.c
+void		parser(t_minirt *mt, char *av);
+t_scene 	parse_ambi_light(t_scene scene, char **line_split);
+t_scene 	parse_camera(t_scene scene, char **line_split);
+t_scene 	parse_light(t_scene scene, char **line_split);
+
+t_obj parse_sphere(t_obj object, char **line_split);
+t_obj parse_plane(t_obj obj, char **line_split);
+t_obj parse_cylinder(t_obj obj, char **line_split);
+
+bool 		ft_bit_range(t_color color);
+t_vector 	split_coordinates(char **str, int i);
+t_color		parse_color(char **line_split, int i);
+bool 		ft_unit_range(t_vector vec);
+
+float	ft_stof(char *str);
+bool	ft_string_digit(char *str);
 
 #endif
