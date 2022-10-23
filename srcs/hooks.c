@@ -1,8 +1,8 @@
 #include "minirt.h"
 
-void scrollhook(double xdelta, double ydelta, void* param)
+void	scrollhook(double xdelta, double ydelta, void *param)
 {
-	t_minirt *mt;
+	t_minirt	*mt;
 
 	(void)xdelta;
 	mt = param;
@@ -24,14 +24,14 @@ void scrollhook(double xdelta, double ydelta, void* param)
 	draw_scene(mt);
 }
 
-void resize(int32_t width, int32_t height, void* param)
+// printf("Aspect ratio: %f\n", (double)mt->width / (double)mt->height);
+void	resize(int32_t width, int32_t height, void *param)
 {
-	t_minirt *mt;
+	t_minirt	*mt;
 
 	mt = param;
 	mt->height = height;
 	mt->width = width;
-	// printf("Aspect ratio: %f\n", (double)mt->width / (double)mt->height);
 	draw_scene(mt);
 }
 
@@ -40,7 +40,8 @@ void	move_cam_y(t_minirt *mt, int y)
 	printf("Moving camera by y\n");
 	mult_vec(&mt->scene.camera.up_v, y);
 	normalize_vec(&mt->scene.camera.up_v);
-	mt->scene.camera.origin = add_vec(mt->scene.camera.origin, mt->scene.camera.up_v);
+	mt->scene.camera.origin
+		= add_vec(mt->scene.camera.origin, mt->scene.camera.up_v);
 	calculate_camera(mt);
 	draw_scene(mt);
 }
@@ -49,7 +50,8 @@ void	move_cam_x(t_minirt *mt, int x)
 {
 	printf("Moving camera by x\n");
 	mult_vec(&mt->scene.camera.right_u, x);
-	mt->scene.camera.origin = add_vec(mt->scene.camera.origin, mt->scene.camera.right_u);
+	mt->scene.camera.origin
+		= add_vec(mt->scene.camera.origin, mt->scene.camera.right_u);
 	calculate_camera(mt);
 	draw_scene(mt);
 }
@@ -58,7 +60,8 @@ void	move_cam_z(t_minirt *mt, int z)
 {
 	printf("Moving camera by z\n");
 	mult_vec(&mt->scene.camera.forward_w, z);
-	mt->scene.camera.origin = add_vec(mt->scene.camera.origin, mt->scene.camera.forward_w);
+	mt->scene.camera.origin
+		= add_vec(mt->scene.camera.origin, mt->scene.camera.forward_w);
 	calculate_camera(mt);
 	draw_scene(mt);
 }

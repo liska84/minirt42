@@ -1,49 +1,21 @@
 #include "minirt.h"
 
-void free_list(t_list *head)
+void	free_list(t_list *head)
 {
-   t_list* tmp;
+	t_list	*tmp;
 
-   while (head)
-    {
-       tmp = head;
-       head = head->next;
-	   free(tmp->content);
-       free(tmp);
-    }
+	while (head)
+	{
+		tmp = head;
+		head = head->next;
+		free(tmp->content);
+		free(tmp);
+	}
 }
 
-void leaks()
+void	leaks(void)
 {
 	system("leaks minirt");
-}
-
-void p_error(void)
-{
-	write(STDERR_FILENO, "Error: wrong number of arguments\n", 33);
-	exit(EXIT_FAILURE);
-}
-
-void msg_error(char *msg, char **line_split)
-{
-	write(STDERR_FILENO, msg, ft_strlen(msg));
-	write(1, "\n", 1);
-	if (line_split != NULL)
-		ft_split_del(&line_split);
-	exit(EXIT_FAILURE);
-}
-
-void m_error(void)
-{
-	write(STDERR_FILENO, mlx_strerror(mlx_errno), ft_strlen(mlx_strerror(mlx_errno)));
-	write(STDERR_FILENO, "\n", 1);
-	exit(EXIT_FAILURE);
-}
-
-void error(void)
-{
-	write(STDERR_FILENO, "Error: allocation failed\n", 25);
-	exit(EXIT_FAILURE);
 }
 
 void	init_mt(t_minirt *mt)
@@ -83,12 +55,14 @@ void	calculate_camera(t_minirt *mt)
 	tmp = new_vec(0, 1, 0);
 	mt->scene.camera.right_u = cross_prod_vec(tmp, mt->scene.camera.forward_w);
 	normalize_vec(&mt->scene.camera.right_u);
-	mt->scene.camera.up_v = cross_prod_vec(mt->scene.camera.forward_w, mt->scene.camera.right_u);
+	mt->scene.camera.up_v
+		= cross_prod_vec(mt->scene.camera.forward_w, mt->scene.camera.right_u);
 }
 
-int main(int ac, char **av) 
+int	main(int ac, char **av)
 {
 	t_minirt	*mt;
+
 	atexit(leaks);
 	mt = malloc(sizeof(t_minirt));
 	mt->width = 1920;
@@ -115,6 +89,24 @@ int main(int ac, char **av)
 		error();
 	}
 	parser(mt, av[1]);
+	calculate_camera(mt);
+	draw_scene(mt);
+	if (mlx_image_to_window(mt->gr.mlx, mt->gr.img, 0, 0) < 0)
+		error();
+	mlx_loop_hook(mt->gr.mlx, hook, mt);
+	mlx_resize_hook(mt->gr.mlx, resize, mt);
+	mlx_scroll_hook(mt->gr.mlx, scrollhook, mt);
+	mlx_loop(mt->gr.mlx);
+	mlx_delete_image(mt->gr.mlx, mt->gr.img);
+	mlx_terminate(mt->gr.mlx);
+	free_list(mt->obj.sphere);
+	free_list(mt->obj.cylinder);
+	free_list(mt->obj.plane);
+	free(mt);
+	return (EXIT_SUCCESS);
+}
+
+/*
 	printf("A: %f %i,%i,%i\n", mt->scene.a_light.ratio, mt->scene.a_light.color.r, mt->scene.a_light.color.g, mt->scene.a_light.color.b);
 	printf("C: %f,%f,%f %f,%f,%f %i\n", mt->scene.camera.origin.x, mt->scene.camera.origin.y, mt->scene.camera.origin.z, mt->scene.camera.direction.x, mt->scene.camera.direction.y, mt->scene.camera.direction.z, mt->scene.camera.fov);
 	printf("L: %f,%f,%f %f %i,%i,%i\n", mt->scene.light.coord.x, mt->scene.light.coord.y, mt->scene.light.coord.z, mt->scene.light.bright, mt->scene.light.color.r, mt->scene.light.color.g, mt->scene.light.color.b);
@@ -143,22 +135,7 @@ int main(int ac, char **av)
 		printf("Cylinder - origin: (%f, %f,%f), orientation: (%f, %f, %f), D:%f, H: %f\n", ptr3->coordinates.x, ptr3->coordinates.y, ptr3->coordinates.z, ptr3->orientation.x, ptr3->orientation.y, ptr3->orientation.z, ptr3->diameter, ptr3->height);
 		head = head->next;
 	}
-	calculate_camera(mt);
-	draw_scene(mt);
-	if (mlx_image_to_window(mt->gr.mlx, mt->gr.img, 0, 0) < 0)
-		error();
-	mlx_loop_hook(mt->gr.mlx, hook, mt);
-	mlx_resize_hook(mt->gr.mlx, resize, mt);
-	mlx_scroll_hook(mt->gr.mlx, scrollhook, mt);
-	mlx_loop(mt->gr.mlx);
-	mlx_delete_image(mt->gr.mlx, mt->gr.img);
-	mlx_terminate(mt->gr.mlx);
-	free_list(mt->obj.sphere);
-	free_list(mt->obj.cylinder);
-	free_list(mt->obj.plane);
-	free(mt);
-	return (EXIT_SUCCESS);
-}
+*/
 
 /*
 

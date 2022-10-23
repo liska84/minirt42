@@ -1,19 +1,23 @@
 #include "minirt.h"
 
-int get_rgba(int r, int g, int b, int a)
+int	get_rgba(int r, int g, int b, int a)
 {
-    return (r << 24 | g << 16 | b << 8 | a);
+	return (r << 24 | g << 16 | b << 8 | a);
 }
 
 int	set_color(t_minirt *mt, t_dist *dist, float light)
 {
 	int		res;
-	float	r = 0.0;
-	float	g = 0.0;
-	float	b = 0.0;
+	float	r;
+	float	g;
+	float	b;
 	float	tmp;
 
-	tmp = mt->scene.a_light.color.r * mt->scene.a_light.ratio + light * mt->scene.light.bright * 255.00f;
+	r = 0.0;
+	g = 0.0;
+	b = 0.0;
+	tmp = mt->scene.a_light.color.r * mt->scene.a_light.ratio
+		+ light * mt->scene.light.bright * 255.00f;
 	if (ft_compare_float(tmp, 255.0) > 0)
 		tmp = 255.0;
 	if (dist->closest_obj == 1)
@@ -22,7 +26,8 @@ int	set_color(t_minirt *mt, t_dist *dist, float light)
 		r = dist->cl_pl->color.r * tmp / 255.0;
 	else if (dist->closest_obj >= 3)
 		r = dist->cl_cy->color.r * tmp / 255.0;
-	tmp = mt->scene.a_light.color.g * mt->scene.a_light.ratio + light * mt->scene.light.bright * 255.00f;
+	tmp = mt->scene.a_light.color.g * mt->scene.a_light.ratio
+		+ light * mt->scene.light.bright * 255.00f;
 	if (ft_compare_float(tmp, 255.0) > 0)
 		tmp = 255.0;
 	if (dist->closest_obj == 1)
@@ -31,7 +36,8 @@ int	set_color(t_minirt *mt, t_dist *dist, float light)
 		g = dist->cl_pl->color.g * tmp / 255.0;
 	else if (dist->closest_obj >= 3)
 		g = dist->cl_cy->color.g * tmp / 255.0;
-	tmp = mt->scene.a_light.color.b * mt->scene.a_light.ratio + light * mt->scene.light.bright * 255.00f;
+	tmp = mt->scene.a_light.color.b * mt->scene.a_light.ratio
+		+ light * mt->scene.light.bright * 255.00f;
 	if (ft_compare_float(tmp, 255.0) > 0)
 		tmp = 255.0;
 	if (dist->closest_obj == 1)
@@ -41,7 +47,7 @@ int	set_color(t_minirt *mt, t_dist *dist, float light)
 	else if (dist->closest_obj >= 3)
 		b = dist->cl_cy->color.b * tmp / 255.0;
 	res = get_rgba(r, g, b, 255);
-	return(res);
+	return (res);
 }
 
 int	draw_pix(t_minirt *mt, t_dist *dist, float int_light)

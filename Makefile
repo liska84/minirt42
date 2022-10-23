@@ -16,6 +16,7 @@ SRCS =	main.c \
 		ft_stof.c \
 		parser_figures.c \
 		utils.c \
+		error.c \
 
 GET_NEXT_LINE_SRCS =	get_next_line.c \
 						get_next_line_utils.c \
@@ -84,14 +85,12 @@ install:
 		echo "$(YELL)Installing Brew:\n$(WHITE)"; \
 		curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | zsh; \
 		brew install glfw; \
-		touch $(BREW); \
 		echo "$(GREEN)Brew is now installed.\n$(WHITE)"; \
 	fi;
 
 clean:
 			make clean -C $(LIBFT_PATH)
 			rm -rf $(OBJS_PATH)
-			rm .brew
 
 fclean_libft:
 			make fclean -C $(LIBFT_PATH)
