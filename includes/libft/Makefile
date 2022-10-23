@@ -6,7 +6,7 @@
 #    By: jmehlig <jmehlig@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/03 16:05:55 by jmehlig           #+#    #+#              #
-#    Updated: 2022/08/26 16:51:29 by jmehlig          ###   ########.fr        #
+#    Updated: 2022/10/23 14:49:55 by jmehlig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,6 @@ SRCS	=		ft_atoi.c \
 				ft_putnbr_fd.c \
 				ft_putstr_fd.c \
 				ft_split.c \
-				ft_split_multi.c \
 				ft_strchr.c \
 				ft_strdup.c \
 				ft_strjoin.c \

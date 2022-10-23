@@ -6,7 +6,7 @@
 /*   By: jmehlig <jmehlig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 18:54:53 by jmehlig           #+#    #+#             */
-/*   Updated: 2022/10/22 21:40:35 by jmehlig          ###   ########.fr       */
+/*   Updated: 2022/10/23 14:50:26 by jmehlig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,8 @@ char	*ft_remove_characters(const char *str, int index_start,
 			int amount_to_remove);
 void	ft_lstdelkey(t_list **lst, void *key, void (*del)(void *));
 int		ft_iswhitespace(int c);
-float 	ft_compare_float(float f1, float f2);
+float	ft_compare_float(float f1, float f2);
 int		ft_f_greater_f(float f1, float f2);
-int 	ft_f_less_f(float f1, float f2);
-char 	**ft_split_multi(const char *str, char *c);
+int		ft_f_less_f(float f1, float f2);
 
 #endif
