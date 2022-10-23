@@ -40,7 +40,7 @@ OBJS_GNL = $(patsubst %.c, %.o, $(GET_NEXT_LINE_SRCS))
 
 LIBFT_PATH	= ./includes/libft/
 
-MLX_PATH = ./minilibx/
+MLX_PATH = ./MLX42/
 
 RED = \033[1;31m
 
@@ -70,12 +70,12 @@ mlx:
 obj:
 	@mkdir -p $(OBJS_PATH)
 
-$(NAME): ${LIBFT} $(OBJS)
+$(NAME): ${LIBFT} $(OBJS) mlx
 	$(CC) $(CFLAGS) -c $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) $(addprefix $(SRCS_PATH), $(SRCS))
 	@mv *.o $(OBJS_PATH)
 #	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) ${LIBFT_PATH}libft.a -o $(NAME) -I $(MLX_PATH)
 #	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) ${LIBFT_PATH}libft.a -o $(NAME) ./MLX42/libmlx42.a -I include -lglfw -L "/Users/jmehlig/.brew/opt/glfw/lib/"
-	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) ${LIBFT_PATH}libft.a -o $(NAME) ../MLX42/libmlx42.a -I include -lglfw -L "/Users/${USER}/.brew/opt/glfw/lib/"
+	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) ${LIBFT_PATH}libft.a -o $(NAME) ./MLX42/libmlx42.a -I include -lglfw -L "/Users/${USER}/.brew/opt/glfw/lib/"
 #	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) ${LIBFT_PATH}libft.a -o $(NAME)
 
 
@@ -86,6 +86,7 @@ install:
 		echo "$(YELL)Installing Brew:\n$(WHITE)"; \
 		curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | zsh; \
 		brew install glfw; \
+		@mv /Users/${USER}/.brew/opt/glfw/include/GLFW ./MLX42/include
 		echo "$(GREEN)Brew is now installed.\n$(WHITE)"; \
 	fi;
 
