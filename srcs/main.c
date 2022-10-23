@@ -116,7 +116,7 @@ int	main(int ac, char **av)
 	while (head)
 	{
 		ptr = head->content;
-		printf("Plane - origin: (%f, %f,%f), orientation: (%f, %f, %f)\n", ptr->coord.x, ptr->coord.y, ptr->coord.z, ptr->orientation.x, ptr->orientation.y, ptr->orientation.z);
+		printf("Plane - origin: (%f, %f,%f), orien: (%f, %f, %f)\n", ptr->coord.x, ptr->coord.y, ptr->coord.z, ptr->orien.x, ptr->orien.y, ptr->orien.z);
 		head = head->next;
 	}
 	t_sphere *ptr2;
@@ -132,7 +132,7 @@ int	main(int ac, char **av)
 	while (head)
 	{
 		ptr3 = head->content;
-		printf("Cylinder - origin: (%f, %f,%f), orientation: (%f, %f, %f), D:%f, H: %f\n", ptr3->coordinates.x, ptr3->coordinates.y, ptr3->coordinates.z, ptr3->orientation.x, ptr3->orientation.y, ptr3->orientation.z, ptr3->diameter, ptr3->height);
+		printf("Cylinder - origin: (%f, %f,%f), orien: (%f, %f, %f), D:%f, H: %f\n", ptr3->coordinates.x, ptr3->coordinates.y, ptr3->coordinates.z, ptr3->orien.x, ptr3->orien.y, ptr3->orien.z, ptr3->diameter, ptr3->height);
 		head = head->next;
 	}
 */
@@ -179,9 +179,9 @@ int	main(int ac, char **av)
 	// pl.coord.y = -30.0;
 	// pl.coord.z = 0.0;
 	// // Normalized vector ! Check for the range [-1, 1]
-	// pl.orientation.x = 0.0;
-	// pl.orientation.y = 1.0;
-	// pl.orientation.z = 0.0;
+	// pl.orien.x = 0.0;
+	// pl.orien.y = 1.0;
+	// pl.orien.z = 0.0;
 	// pl.color.r = 255;
 	// pl.color.g = 0;
 	// pl.color.b = 255;
@@ -191,9 +191,9 @@ int	main(int ac, char **av)
 	// cy.coordinates.y = -20;
 	// cy.coordinates.z = -100;
 	// // Normalized vector ! Check for the range [-1, 1]
-	// cy.orientation.x = 0.0;
-	// cy.orientation.y = 1.0;
-	// cy.orientation.z = 0.0;
+	// cy.orien.x = 0.0;
+	// cy.orien.y = 1.0;
+	// cy.orien.z = 0.0;
 	// cy.diameter = 20.0;
 	// cy.height = 15.0;
 	// cy.color.r = 100;

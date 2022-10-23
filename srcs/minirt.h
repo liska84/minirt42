@@ -11,22 +11,22 @@
 // # include "../minilibx/mlx.h"
 # include "../includes/libft/libft.h"
 # include "../includes/get_next_line/get_next_line.h"
-# include "..//MLX42/include/MLX42/MLX42.h"
+# include "../MLX42/include/MLX42/MLX42.h"
 # include "../MLX42/include/MLX42/MLX42_Input.h"
 # include "../MLX42/include/MLX42/MLX42_Int.h"
 
 typedef struct s_vector
 {
-	float   x;
-	float   y;
-	float   z;
-}   t_vector;
+	float	x;
+	float	y;
+	float	z;
+}	t_vector;
 
 typedef struct s_color
 {
-	int r;
-	int g;
-	int b;
+	int	r;
+	int	g;
+	int	b;
 }	t_color;
 
 typedef struct s_coef
@@ -39,16 +39,15 @@ typedef struct s_coef
 
 typedef struct s_ambi_light
 {
-	float   ratio;
-	t_color color;
-}   t_ambi_light;
+	float	ratio;
+	t_color	color;
+}	t_ambi_light;
 
 typedef struct s_camera
 {
-	t_vector    origin;
-	t_vector    direction;
-	int		    fov;
-	// float       fov; int or float?
+	t_vector	origin;
+	t_vector	direction;
+	int			fov;
 	t_vector	up_v;
 	t_vector	right_u;
 	t_vector	forward_w;
@@ -59,30 +58,30 @@ typedef struct s_light
 	t_vector	coord;
 	float		bright;
 	t_color		color;
-}   t_light;
+}	t_light;
 
 typedef struct s_sphere
 {
 	t_vector	center;
 	float		diam;
 	t_color		color;
-}   t_sphere;
+}	t_sphere;
 
 typedef struct s_plane
 {
-	t_vector 	coord;
-	t_vector 	orientation;
+	t_vector	coord;
+	t_vector	orien;
 	t_color		color;
-}   t_plane;
+}	t_plane;
 
 typedef struct s_cylinder
 {
-	t_vector 	coordinates;
-	t_vector	orientation;
+	t_vector	coordinates;
+	t_vector	orien;
 	float		diameter;
 	float		height;
-	t_color 	color;
-}   t_cylinder;
+	t_color		color;
+}	t_cylinder;
 
 typedef struct s_dist
 {
@@ -95,7 +94,7 @@ typedef struct s_dist
 	t_vector	*dot_light;
 }	t_dist;
 
-typedef	struct	s_obj
+typedef struct s_obj
 {
 	t_list	*sphere;
 	t_list	*plane;
@@ -107,7 +106,7 @@ typedef struct s_scene
 	t_ambi_light	a_light;
 	t_camera		camera;
 	t_light			light;
-}   t_scene;
+}	t_scene;
 
 typedef struct s_draw
 {
@@ -145,10 +144,10 @@ typedef struct s_minirt
 	int32_t		height;
 }	t_minirt;
 
-void	error(void); // allocation 
-void	p_error(void); // parser error
-void	m_error(void); // mlx error
-void	msg_error(char *msg, char **split);
+void		error(void); // allocation 
+void		p_error(void); // parser error
+void		m_error(void); // mlx error
+void		msg_error(char *msg, char **split);
 
 float		ft_stof(char *str);
 bool		ft_bit_range(t_color color);
@@ -172,12 +171,12 @@ void		msg_error(char *msg, char **line_split);
 void		m_error(void);
 
 void		calculate_camera(t_minirt *mt);
-void    	draw_scene(t_minirt *mt);
+void		draw_scene(t_minirt *mt);
 void		hook(void *param);
-void		scrollhook(double xdelta, double ydelta, void* param);
-void 		resize(int32_t width, int32_t height, void* param);
+void		scrollhook(double xdelta, double ydelta, void *param);
+void		resize(int32_t width, int32_t height, void *param);
 
-t_vector    new_vec(float x, float y, float z);
+t_vector	new_vec(float x, float y, float z);
 float		len_vec(t_vector v);
 void		normalize_vec(t_vector *v);
 t_vector	sub_vec(t_vector a, t_vector b);
@@ -188,7 +187,8 @@ t_vector	cross_prod_vec(t_vector a, t_vector b);
 
 float		sphere_intersect(t_camera cam, t_vector ray, t_sphere *sp);
 float		plane_intersect(t_camera cam, t_vector ray, t_plane *pl);
-float		cy_intersect(t_minirt *mt, t_vector ray, t_dist *dist, t_cylinder *cy);
+float		cy_intersect(t_minirt *mt,
+				t_vector ray, t_dist *dist, t_cylinder *cy);
 
 int			draw_pix(t_minirt *mt, t_dist *dist, float int_light);
 int			set_color(t_minirt *mt, t_dist *dist, float light);
@@ -200,20 +200,20 @@ int			shadow_cylinder(t_minirt *mt, t_dist *dist, t_vector *ray);
 
 // parser.c
 void		parser(t_minirt *mt, char *av);
-t_scene 	parse_ambi_light(t_scene scene, char **line_split);
-t_scene 	parse_camera(t_scene scene, char **line_split);
-t_scene 	parse_light(t_scene scene, char **line_split);
+t_scene		parse_ambi_light(t_scene scene, char **line_split);
+t_scene		parse_camera(t_scene scene, char **line_split);
+t_scene		parse_light(t_scene scene, char **line_split);
 
-t_obj parse_sphere(t_obj object, char **line_split);
-t_obj parse_plane(t_obj obj, char **line_split);
-t_obj parse_cylinder(t_obj obj, char **line_split);
+t_obj		parse_sphere(t_obj object, char **line_split);
+t_obj		parse_plane(t_obj obj, char **line_split);
+t_obj		parse_cylinder(t_obj obj, char **line_split);
 
-bool 		ft_bit_range(t_color color);
-t_vector 	split_coordinates(char **str, int i);
+bool		ft_bit_range(t_color color);
+t_vector	split_coordinates(char **str, int i);
 t_color		parse_color(char **line_split, int i);
-bool 		ft_unit_range(t_vector vec);
+bool		ft_unit_range(t_vector vec);
 
-float	ft_stof(char *str);
-bool	ft_string_digit(char *str);
+float		ft_stof(char *str);
+bool		ft_string_digit(char *str);
 
 #endif

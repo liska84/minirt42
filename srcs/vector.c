@@ -2,7 +2,7 @@
 
 t_vector	new_vec(float x, float y, float z)
 {
-	t_vector    res;
+	t_vector	res;
 
 	res.x = x;
 	res.y = y;
@@ -33,9 +33,9 @@ void	normalize_vec(t_vector *v)
 	v->z /= length;
 }
 
-t_vector sub_vec(t_vector a, t_vector b)
+t_vector	sub_vec(t_vector a, t_vector b)
 {
-	t_vector res;
+	t_vector	res;
 
 	res.x = a.x - b.x;
 	res.y = a.y - b.y;
@@ -46,31 +46,4 @@ t_vector sub_vec(t_vector a, t_vector b)
 float	scalar_vec(t_vector a, t_vector b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
-}
-
-void	mult_vec(t_vector *dir, float n)
-{
-	dir->x *= n;
-	dir->y *= n;
-	dir->z *= n;
-}
-
-t_vector add_vec(t_vector a, t_vector b)
-{
-	t_vector	res;
-
-	res.x = a.x + b.x;
-	res.y = a.y + b.y;
-	res.z = a.z + b.z;
-	return (res);
-}
-
-t_vector cross_prod_vec(t_vector a, t_vector b)
-{
-	t_vector	res;
-
-	res.x = a.y * b.z - a.z * b.y;
-	res.y = a.z * b.x - a.x * b.z;
-	res.z = a.x * b.y - a.y * b.x;
-	return (res);
 }

@@ -5,7 +5,7 @@ void	free_content(void *content)
 	free(content);
 }
 
-t_obj parse_sphere(t_obj object, char **line_split)
+t_obj	parse_sphere(t_obj object, char **line_split)
 {
 	t_sphere	*sphere;
 	t_list		*new;
@@ -16,7 +16,8 @@ t_obj parse_sphere(t_obj object, char **line_split)
 		ft_split_del(&line_split);
 		p_error();
 	}
-	if (line_split[4] && ft_strncmp(line_split[4], "\n", 1) == 0);
+	if (line_split[4] && ft_strncmp(line_split[4], "\n", 1) == 0)
+		;
 	else if (!line_split[3] || line_split[4])
 		msg_error("Not the right sp input", line_split);
 	sphere->center = split_coordinates(line_split, 1);
@@ -28,12 +29,12 @@ t_obj parse_sphere(t_obj object, char **line_split)
 	if (!new)
 		msg_error("Error\n", line_split);
 	ft_lstadd_back(&object.sphere, new);
-	return(object);
+	return (object);
 }
 
-t_obj parse_plane(t_obj obj, char **line_split)
+t_obj	parse_plane(t_obj obj, char **line_split)
 {
-	t_plane *plane;
+	t_plane	*plane;
 	t_list	*new;
 
 	plane = malloc(sizeof(t_plane));
@@ -42,27 +43,27 @@ t_obj parse_plane(t_obj obj, char **line_split)
 		ft_split_del(&line_split);
 		p_error();
 	}
-	if (line_split[4] && ft_strncmp(line_split[4], "\n", 1) == 0);
+	if (line_split[4] && ft_strncmp(line_split[4], "\n", 1) == 0)
+		;
 	else if (!line_split[3] || line_split[4])
 		msg_error("Not the right pl input", line_split);
 	plane->coord = split_coordinates(line_split, 1);
-	plane->orientation = split_coordinates(line_split, 2);
-	if (!ft_unit_range(plane->orientation))
+	plane->orien = split_coordinates(line_split, 2);
+	if (!ft_unit_range(plane->orien))
 		msg_error("'pl': orientaion out of range", line_split);
 	plane->color = parse_color(line_split, 3);
 	if (!ft_bit_range(plane->color))
 		msg_error("'pl': colors out of range", line_split);
 	new = ft_lstnew(plane);
-	if(!new)
+	if (!new)
 		msg_error("Error\n", line_split);
 	ft_lstadd_back(&obj.plane, new);
-	return(obj);
+	return (obj);
 }
 
-t_obj parse_cylinder(t_obj obj, char **line_split)
+static t_cylinder	*new_cy(char **line_split)
 {
-	t_cylinder 	*cylinder;
-	t_list 		*new;
+	t_cylinder	*cylinder;
 
 	cylinder = malloc(sizeof(t_cylinder));
 	if (!cylinder)
@@ -70,12 +71,22 @@ t_obj parse_cylinder(t_obj obj, char **line_split)
 		ft_split_del(&line_split);
 		p_error();
 	}
-	if (line_split[6] && ft_strncmp(line_split[6], "\n", 1) == 0);
+	return (cylinder);
+}
+
+t_obj	parse_cylinder(t_obj obj, char **line_split)
+{
+	t_cylinder	*cylinder;
+	t_list		*new;
+
+	cylinder = new_cy(line_split);
+	if (line_split[6] && ft_strncmp(line_split[6], "\n", 1) == 0)
+		;
 	else if (!line_split[5] || line_split[6])
 		msg_error("Not the right cy input", line_split);
 	cylinder->coordinates = split_coordinates(line_split, 1);
-	cylinder->orientation = split_coordinates(line_split, 2);
-	if (!ft_unit_range(cylinder->orientation))
+	cylinder->orien = split_coordinates(line_split, 2);
+	if (!ft_unit_range(cylinder->orien))
 		msg_error("'cy': orientaion out of range", line_split);
 	cylinder->diameter = ft_stof(line_split[3]);
 	cylinder->height = ft_stof(line_split[4]);
@@ -83,8 +94,8 @@ t_obj parse_cylinder(t_obj obj, char **line_split)
 	if (!ft_bit_range(cylinder->color))
 		msg_error("'cy': colors out of range", line_split);
 	new = ft_lstnew(cylinder);
-	if(!new)
+	if (!new)
 		msg_error("Error\n", line_split);
 	ft_lstadd_back(&obj.cylinder, new);
-	return(obj);
+	return (obj);
 }

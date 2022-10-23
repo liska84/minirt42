@@ -6,14 +6,14 @@
 /*   By: jmehlig <jmehlig@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:27:39 by jmehlig           #+#    #+#             */
-/*   Updated: 2022/10/23 14:46:43 by jmehlig          ###   ########.fr       */
+/*   Updated: 2022/10/23 18:20:12 by jmehlig          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "math.h"
 
-float	ft_compare_float(float f1, float f2)
+float	ft_comp_float(float f1, float f2)
 {
 	float	diff;
 	float	precision;

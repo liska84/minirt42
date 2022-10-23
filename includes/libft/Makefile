@@ -6,7 +6,7 @@
 #    By: jmehlig <jmehlig@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/03 16:05:55 by jmehlig           #+#    #+#              #
-#    Updated: 2022/10/23 14:49:55 by jmehlig          ###   ########.fr        #
+#    Updated: 2022/10/23 18:20:41 by jmehlig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,7 +69,7 @@ SRCS	=		ft_atoi.c \
 				ft_remove_characters.c \
 				ft_lstdelkey.c \
 				ft_iswhitespace.c \
-				ft_compare_float.c \
+				ft_comp_float.c \
 				ft_f_less_f.c \
 				ft_f_greater_f.c
 

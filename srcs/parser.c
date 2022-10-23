@@ -1,6 +1,6 @@
 #include "minirt.h"
 
-static t_minirt *in_scene(t_minirt *mt, char **split_line)
+static t_minirt	*in_scene(t_minirt *mt, char **split_line)
 {
 	if (ft_strncmp(split_line[0], "A", 2) == 0)
 		mt->scene = parse_ambi_light(mt->scene, split_line);
@@ -15,19 +15,18 @@ static t_minirt *in_scene(t_minirt *mt, char **split_line)
 	else if (ft_strncmp(split_line[0], "cy", 3) == 0)
 		mt->obj = parse_cylinder(mt->obj, split_line);
 	else if (ft_strncmp(split_line[0], "\n", 1) == 0 || split_line[0][0] == '#')
-		split_line[0][0] = '\n'; //do nothing
+		split_line[0][0] = '\n';
 	else
 		msg_error(split_line[0], split_line);
-	// if there is a symbol, that has no meaning, return error and free
 	ft_split_del(&split_line);
 	return (mt);
 }
 
-static t_minirt *readfile(t_minirt *mt, int fd)
+static t_minirt	*readfile(t_minirt *mt, int fd)
 {
-	char 	*line;
-	char 	*tmp;
-	char 	**split_line;
+	char	*line;
+	char	*tmp;
+	char	**split_line;
 	int		i;
 
 	while (1)
@@ -49,11 +48,10 @@ static t_minirt *readfile(t_minirt *mt, int fd)
 	return (mt);
 }
 
-// Figuren in mt->obj, Scene in mt->scene
-void parser(t_minirt *mt, char *argv)
+void	parser(t_minirt *mt, char *argv)
 {
-	int fd;
-	char *src;
+	int		fd;
+	char	*src;
 
 	src = ft_strjoin("./tests/", argv);
 	fd = open(src, O_RDONLY);
@@ -61,8 +59,9 @@ void parser(t_minirt *mt, char *argv)
 	if (fd < 0)
 		p_error();
 	mt = readfile(mt, fd);
-	// Ask if any of A L C is NOT in the rt file!!
-	if (mt->scene.camera.fov == -1 || ft_compare_float(mt->scene.a_light.ratio, -1.0) == 0 || ft_compare_float(mt->scene.light.bright, -1.0) == 0)
+	if (mt->scene.camera.fov == -1
+		|| ft_comp_float(mt->scene.a_light.ratio, -1.0) == 0
+		|| ft_comp_float(mt->scene.light.bright, -1.0) == 0)
 		p_error();
 	close(fd);
 }

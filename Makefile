@@ -7,6 +7,7 @@ GET_NEXT_LINE_PATH = ./includes/get_next_line/
 SRCS =	main.c \
 		draw.c \
 		vector.c \
+		vector2.c \
 		hooks.c \
 		intersect.c \
 		color.c \
