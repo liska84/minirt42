@@ -6,7 +6,7 @@
 #    By: jmehlig <jmehlig@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/03 16:05:55 by jmehlig           #+#    #+#              #
-#    Updated: 2022/10/23 18:20:41 by jmehlig          ###   ########.fr        #
+#    Updated: 2022/10/24 19:11:50 by jmehlig          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,6 +85,10 @@ BSRCS	=		ft_lstnew.c \
 				ft_lstiter.c \
 				ft_lstmap.c \
 
+GREEN = \033[1;32m
+
+WHITE = \033[0m
+
 BOBJS	=		$(BSRCS:.c=.o)
 
 CC		=		gcc
@@ -96,19 +100,20 @@ AR		=		ar rc
 RM		=		rm -f
 
 .c.o:
-			$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+			@$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
 $(NAME):	$(OBJS)
-			$(AR) $(NAME) $(OBJS)
+			@$(AR) $(NAME) $(OBJS)
+			@echo "$(GREEN)libft compiled!\n$(WHITE)"; \
 
 bonus:		$(NAME) $(BOBJS)
 			$(AR) $(NAME) $(BOBJS)
 
 clean:
-			$(RM) $(OBJS) $(BOBJS)
+			@$(RM) $(OBJS) $(BOBJS)
 
 fclean:		clean
-			$(RM) $(NAME)
+			@$(RM) $(NAME)
 
 all:		$(NAME)
 
