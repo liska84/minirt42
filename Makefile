@@ -64,13 +64,14 @@ all:	obj $(NAME)
 ${LIBFT}:
 	@make -C $(LIBFT_PATH)
 
-mlx:
+$(mlx):
 	@make -C $(MLX_PATH)
 
 obj:
 	@mkdir -p $(OBJS_PATH)
 
-$(NAME): ${LIBFT} $(OBJS) mlx
+$(NAME):	${LIBFT} $(OBJS)
+	$(mlx)
 	$(CC) $(CFLAGS) -c $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) $(addprefix $(SRCS_PATH), $(SRCS))
 	@mv *.o $(OBJS_PATH)
 #	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) ${LIBFT_PATH}libft.a -o $(NAME) -I $(MLX_PATH)
@@ -78,6 +79,8 @@ $(NAME): ${LIBFT} $(OBJS) mlx
 	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) ${LIBFT_PATH}libft.a -o $(NAME) ./MLX42/libmlx42.a -I include -lglfw -L "/Users/${USER}/.brew/opt/glfw/lib/"
 #	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) ${LIBFT_PATH}libft.a -o $(NAME)
 
+$(OBJS_PATH)/%.o:	$(SRCS_PATH)/%.c
+	$(CC) $(CFLAGS) -c $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) $<
 
 install:
 	@if [ -f $(BREWU) ];then \
