@@ -81,10 +81,11 @@ clean:
 			rm -rf $(OBJS_PATH)
 
 fclean_libft:
-			make fclean -C $(LIBFT_PATH)
+			@make fclean -C $(LIBFT_PATH)
 
 
 fclean:		clean fclean_libft
+			@make fclean -C $(MLX_PATH)
 			$(RM) $(NAME)
 
 re:			fclean

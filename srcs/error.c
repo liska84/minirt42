@@ -8,6 +8,7 @@ void	p_error(void)
 
 void	msg_error(char *msg, char **line_split)
 {
+	write(STDERR_FILENO, "Error: ", 7);
 	write(STDERR_FILENO, msg, ft_strlen(msg));
 	write(1, "\n", 1);
 	if (line_split != NULL)

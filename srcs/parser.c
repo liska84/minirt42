@@ -72,7 +72,7 @@ void	parser(t_minirt *mt, char *argv)
 	fd = open(src, O_RDONLY);
 	ft_free(src);
 	if (fd < 0)
-		p_error();
+		msg_error("Couldn't open input file!", NULL);
 	mt = readfile(mt, fd);
 	if (mt->scene.camera.fov == -1
 		|| ft_comp_float(mt->scene.a_light.ratio, -1.0) == 0
