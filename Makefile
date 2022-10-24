@@ -34,7 +34,7 @@ OBJS_GNL = $(patsubst %.c, %.o, $(GET_NEXT_LINE_SRCS))
 
 LIBFT_PATH	= ./includes/libft/
 
-MLX_PATH = ./minilibx/
+MLX_PATH = ./MLX42/
 
 CC		=		gcc
 
@@ -43,24 +43,23 @@ CFLAGS	=		-Wall -Wextra -Werror -D BUFFER_SIZE=1
 #MLXFLAGS =		$(MLX) -framework Cocoa -framework OpenGL -framework IOKit
 MLXFLAGS =		-framework Cocoa -framework OpenGL -framework IOKit
 
-all:	obj $(NAME)
+all:	obj $(MLX) $(NAME)
 
 ${LIBFT}:
 	@make -C $(LIBFT_PATH)
 
-$(mlx):
+$(MLX):
 	@make -C $(MLX_PATH)
 
 obj:
 	@mkdir -p $(OBJS_PATH)
 
 $(NAME):	${LIBFT} $(OBJS)
-	$(mlx)
 	$(CC) $(CFLAGS) -c $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) $(addprefix $(SRCS_PATH), $(SRCS))
 	@mv *.o $(OBJS_PATH)
 #	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) ${LIBFT_PATH}libft.a -o $(NAME) -I $(MLX_PATH)
 #	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) ${LIBFT_PATH}libft.a -o $(NAME) ./MLX42/libmlx42.a -I include -lglfw -L "/Users/jmehlig/.brew/opt/glfw/lib/"
-	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) ${LIBFT_PATH}libft.a -o $(NAME) ../MLX42/libmlx42.a -I include -lglfw -L "/Users/kmorunov/.brew/opt/glfw/lib/"
+	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) ${LIBFT_PATH}libft.a -o $(NAME) ./MLX42/libmlx42.a -I include -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/"
 #	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(addprefix $(GET_NEXT_LINE_PATH), $(GET_NEXT_LINE_SRCS)) ${LIBFT_PATH}libft.a -o $(NAME)
 
 $(OBJS_PATH)/%.o:	$(SRCS_PATH)/%.c

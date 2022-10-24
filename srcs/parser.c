@@ -22,6 +22,20 @@ static t_minirt	*in_scene(t_minirt *mt, char **split_line)
 	return (mt);
 }
 
+char	*ft_whitespace(char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] == '\t' || line[i] == '\v' || line[i] == '\f')
+			line[i] = ' ';
+		i++;
+	}
+	return (line);
+}
+
 static t_minirt	*readfile(t_minirt *mt, int fd)
 {
 	char	*line;
@@ -34,6 +48,7 @@ static t_minirt	*readfile(t_minirt *mt, int fd)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
+		line = ft_whitespace(line);
 		split_line = ft_split(line, ' ');
 		i = 0;
 		while (split_line[i] != NULL)
