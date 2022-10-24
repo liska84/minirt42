@@ -8,12 +8,11 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <string.h>
-// # include "../minilibx/mlx.h"
 # include "../includes/libft/libft.h"
 # include "../includes/get_next_line/get_next_line.h"
-# include "../MLX42/include/MLX42/MLX42.h"
-# include "../MLX42/include/MLX42/MLX42_Input.h"
-# include "../MLX42/include/MLX42/MLX42_Int.h"
+# include "../../MLX42/include/MLX42/MLX42.h"
+# include "../../MLX42/include/MLX42/MLX42_Input.h"
+# include "../../MLX42/include/MLX42/MLX42_Int.h"
 
 typedef struct s_vector
 {
@@ -119,15 +118,6 @@ typedef struct s_draw
 	t_vector	*ray;
 }	t_draw;
 
-// typedef struct s_vp
-// {
-// 	float   width;
-// 	float   height;
-// 	float   x_pix;
-// 	float   y_pix;
-// 	float   aspect_ratio;
-// }   t_vp;
-
 typedef struct s_graphic
 {
 	mlx_t		*mlx;
@@ -144,9 +134,9 @@ typedef struct s_minirt
 	int32_t		height;
 }	t_minirt;
 
-void		error(void); // allocation 
-void		p_error(void); // parser error
-void		m_error(void); // mlx error
+void		error(void);
+void		p_error(void);
+void		m_error(void);
 void		msg_error(char *msg, char **split);
 
 float		ft_stof(char *str);
@@ -164,11 +154,6 @@ t_scene		parse_light(t_scene scene, char **line_split);
 t_obj		parse_cylinder(t_obj obj, char **line_split);
 t_obj		parse_plane(t_obj obj, char **line_split);
 t_obj		parse_sphere(t_obj object, char **line_split);
-
-void		error(void);
-void		p_error(void);
-void		msg_error(char *msg, char **line_split);
-void		m_error(void);
 
 void		calculate_camera(t_minirt *mt);
 void		draw_scene(t_minirt *mt);
@@ -197,23 +182,5 @@ int			get_rgba(int r, int g, int b, int a);
 int			shadow_sphere(t_minirt *mt, t_dist *dist, t_vector *ray);
 int			shadow_plane(t_minirt *mt, t_dist *dist, t_vector *ray);
 int			shadow_cylinder(t_minirt *mt, t_dist *dist, t_vector *ray);
-
-// parser.c
-void		parser(t_minirt *mt, char *av);
-t_scene		parse_ambi_light(t_scene scene, char **line_split);
-t_scene		parse_camera(t_scene scene, char **line_split);
-t_scene		parse_light(t_scene scene, char **line_split);
-
-t_obj		parse_sphere(t_obj object, char **line_split);
-t_obj		parse_plane(t_obj obj, char **line_split);
-t_obj		parse_cylinder(t_obj obj, char **line_split);
-
-bool		ft_bit_range(t_color color);
-t_vector	split_coordinates(char **str, int i);
-t_color		parse_color(char **line_split, int i);
-bool		ft_unit_range(t_vector vec);
-
-float		ft_stof(char *str);
-bool		ft_string_digit(char *str);
 
 #endif

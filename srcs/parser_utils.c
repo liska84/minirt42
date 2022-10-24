@@ -1,20 +1,5 @@
 #include "minirt.h"
 
-//convert string to float
-
-static long	ft_power(int base, int exponent)
-{
-	long	power;
-
-	power = 1;
-	while (exponent > 0)
-	{
-		power = power * base;
-		exponent--;
-	}
-	return (power);
-}
-
 bool	ft_string_digit(char *str)
 {
 	int	i;
@@ -27,6 +12,19 @@ bool	ft_string_digit(char *str)
 		i++;
 	}
 	return (true);
+}
+
+static long	ft_power(int base, int exponent)
+{
+	long	power;
+
+	power = 1;
+	while (exponent > 0)
+	{
+		power = power * base;
+		exponent--;
+	}
+	return (power);
 }
 
 static float	ft_convert(int deci_places, char *tmp, char *tmp2)

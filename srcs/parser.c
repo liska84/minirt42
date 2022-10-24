@@ -53,7 +53,7 @@ void	parser(t_minirt *mt, char *argv)
 	int		fd;
 	char	*src;
 
-	src = ft_strjoin("./tests/", argv);
+	src = ft_strjoin("./scenes/", argv);
 	fd = open(src, O_RDONLY);
 	ft_free(src);
 	if (fd < 0)

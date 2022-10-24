@@ -12,7 +12,6 @@ bool	ft_bit_range(t_color color)
 		return (true);
 }
 
-//this should also look for normalized??
 bool	ft_unit_range(t_vector vec)
 {
 	if (ft_f_less_f(vec.x, -1.0) || ft_f_greater_f(vec.x, 1.0))

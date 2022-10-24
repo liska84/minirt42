@@ -10,8 +10,7 @@ static void	closest_sp(t_minirt *mt, t_dist *dist, t_vector *ray)
 	{
 		sp = ptr->content;
 		dist->dist = sphere_intersect(mt->scene.camera, *ray, sp);
-		if (ft_comp_float(dist->dist, 0) > 0
-			&& ft_comp_float(dist->dist, dist->min_dist) < 0)
+		if (dist->dist > 0 && dist->dist < dist->min_dist)
 		{
 			dist->min_dist = dist->dist;
 			dist->closest_obj = 1;
@@ -31,8 +30,7 @@ static void	closest_pl(t_minirt *mt, t_dist *dist, t_vector *ray)
 	{
 		pl = ptr->content;
 		dist->dist = plane_intersect(mt->scene.camera, *ray, pl);
-		if (ft_comp_float(dist->dist, 0) > 0
-			&& ft_comp_float(dist->dist, dist->min_dist) > 0)
+		if (dist->dist > 0 && dist->dist < dist->min_dist)
 		{
 			dist->min_dist = dist->dist;
 			dist->closest_obj = 2;
@@ -126,6 +124,8 @@ static void	draw_objects(t_minirt *mt, t_vector *ray, int *color)
 		*color = 0xffffe5ff;
 	else
 	{
+		// printf("Closest object: %zu\n", dist->closest_obj);
+
 		int_light = dot_normal(dist, ray);
 		if (shadow_sphere(mt, dist, ray) || shadow_plane(mt, dist, ray)
 			|| shadow_cylinder(mt, dist, ray))

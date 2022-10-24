@@ -1,31 +1,29 @@
 #include "minirt.h"
 
-float	sphere_intersect(t_camera cam, t_vector ray, t_sphere *sp)
+float sphere_intersect(t_camera cam, t_vector ray, t_sphere *sp)
 {
-	t_coef		coef;
+	t_coef		coef; 
 	t_vector	cam_sp;
 	float		d1;
 	float		d2;
-	float		a;
 
 	cam_sp = sub_vec(cam.origin, sp->center);
 	coef.a = 1.0;
 	coef.b = 2 * scalar_vec(cam_sp, ray);
 	coef.c = scalar_vec(cam_sp, cam_sp) - pow(sp->diam / 2, 2);
 	coef.disc = pow(coef.b, 2) - 4.0 * coef.a * coef.c;
-	a = ft_comp_float(coef.disc, 0.0f);
-	if (a < 0)
+	if (coef.disc < 0.0)
 		return (0);
 	d1 = (-1 * coef.b - sqrt(coef.disc)) / 2 * coef.a;
 	d2 = (-1 * coef.b + sqrt(coef.disc)) / 2 * coef.a;
-	if (ft_comp_float(d1, 0) > 0)
+	if (d1 > 0.0)
 		return (d1);
-	else if (ft_comp_float(d2, 0) > 0)
+	else if (d2 > 0.0)
 		return (d2);
-	return (0);
+	return (0.0);
 }
 
-float	plane_intersect(t_camera cam, t_vector ray, t_plane *pl)
+float plane_intersect(t_camera cam, t_vector ray, t_plane *pl)
 {
 	t_vector	d;
 	float		pn;
@@ -34,15 +32,17 @@ float	plane_intersect(t_camera cam, t_vector ray, t_plane *pl)
 
 	c = scalar_vec(pl->orien, ray);
 	d = sub_vec(pl->coord, cam.origin);
-	if (ft_comp_float(c, 0) != 0)
+	if (c)
 	{
 		pn = scalar_vec(d, pl->orien);
 		dist = pn / c;
-		if (ft_comp_float(dist, 0) < 0)
-			return (0);
-		return (dist);
+		if (dist < 0.0)
+			return (0.0);
+		else
+			return (dist);
 	}
-	return (0);
+	else
+		return (0.0);
 }
 
 void	body_intersect(t_camera cam, t_vector ray, t_cylinder *cy, float *min_d)
@@ -108,7 +108,7 @@ float	cap_intersect(t_camera cam, t_vector ray, t_plane *pl, float radius)
 
 static void	get_near(t_dist *dist, float min_d, float *d_cap, t_cylinder *cy)
 {
-	if (ft_comp_float(min_d, dist->min_dist) < 0)
+	if (min_d < dist->min_dist)
 	{
 		dist->min_dist = min_d;
 		dist->closest_obj = 3;
@@ -120,13 +120,6 @@ static void	get_near(t_dist *dist, float min_d, float *d_cap, t_cylinder *cy)
 	}
 }
 
-		// 	dist->min_dist = min_d;
-		// 	dist->closest_obj = 3; // Body
-		// 	if (min_d == d_cap[0])
-		// 		dist->closest_obj = 4; // Bottom cap
-		// 	if (min_d == d_cap[1])
-		// 		dist->closest_obj = 5; // Top cap
-		// 	dist->cl_cy = cy;
 float	cy_intersect(t_minirt *mt, t_vector ray, t_dist *dist, t_cylinder *cy)
 {
 	float		d_cap[2];
