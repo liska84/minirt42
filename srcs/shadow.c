@@ -223,7 +223,7 @@ float	p_in_rectangle(t_vector p, t_cylinder *cy, t_vector norm)
 	t_vector D;
 	float r;
 
-	r  = cy->diameter / 2;
+	r  = cy->diameter / 2 * 1.015;
 	b = cross_prod_vec(cy->orien, norm); // in Richtung b diam, in Richtung cy->orien h
 	normalize_vec(&b);
 	t_vector test = add_vec(cy->coordinates, new_vec(cy->orien.x * (cy->height / 2), cy->orien.y * (cy->height / 2), cy->orien.z * (cy->height / 2)));
@@ -283,11 +283,12 @@ float	shad_cy_intersect(t_vector *dot_light, t_cylinder *cy, t_vector *ray, t_ve
 	t_vector	top_disc;
 	t_plane		plane;
 
-	if (shadow_b_inter(dot_light, ray, cy, light))
-	{
-		//write(1, "shadow\n", 7);
-		return (1);
-	}
+	// if (shadow_b_inter(dot_light, ray, cy, light))
+	// {
+	// 	//write(1, "shadow\n", 7);
+	// 	return (1);
+	// }
+	(void)light;
 	plane.coord = cy->coordinates;
 	plane.orien = cy->orien;
 	plane.color = cy->color;

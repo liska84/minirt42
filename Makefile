@@ -1,4 +1,4 @@
-NAME = minirt
+NAME = miniRT
 
 SRCS_PATH = srcs/
 

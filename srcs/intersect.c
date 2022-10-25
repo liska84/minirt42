@@ -36,7 +36,7 @@ float plane_intersect(t_camera cam, t_vector ray, t_plane *pl)
 	{
 		pn = scalar_vec(d, pl->orien);
 		dist = pn / c;
-		if (dist < 0.0)
+		if (ft_comp_float(dist, 0) < 0.0)
 			return (0.0);
 		else
 			return (dist);
