@@ -24,7 +24,7 @@ static t_minirt	*in_scene(t_minirt *mt, char **split_line)
 
 char	*ft_whitespace(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i] != '\0')

@@ -1,73 +1,19 @@
 #include "minirt.h"
 
-static void	closest_sp(t_minirt *mt, t_dist *dist, t_vector *ray)
-{
-	t_sphere	*sp;
-	t_list		*ptr;
-
-	ptr = mt->obj.sphere;
-	while (ptr)
-	{
-		sp = ptr->content;
-		dist->dist = sphere_intersect(mt->scene.camera, *ray, sp);
-		if (dist->dist > 0 && dist->dist < dist->min_dist)
-		{
-			dist->min_dist = dist->dist;
-			dist->closest_obj = 1;
-			dist->cl_sp = sp;
-		}
-		ptr = ptr->next;
-	}
-}
-
-static void	closest_pl(t_minirt *mt, t_dist *dist, t_vector *ray)
-{
-	t_plane	*pl;
-	t_list	*ptr;
-
-	ptr = mt->obj.plane;
-	while (ptr)
-	{
-		pl = ptr->content;
-		dist->dist = plane_intersect(mt->scene.camera, *ray, pl);
-		if (dist->dist > 0 && dist->dist < dist->min_dist)
-		{
-			dist->min_dist = dist->dist;
-			dist->closest_obj = 2;
-			dist->cl_pl = pl;
-		}
-		ptr = ptr->next;
-	}
-}
-
-static void	closest_cy(t_minirt *mt, t_dist *dist, t_vector *ray)
-{
-	t_cylinder	*cy;
-	t_list		*ptr;
-
-	ptr = mt->obj.cylinder;
-	while (ptr)
-	{
-		cy = ptr->content;
-		dist->dist = cy_intersect(mt, *ray, dist, cy);
-		ptr = ptr->next;
-	}
-}
-
 static void	dot_normal_cylind(t_dist *dist, t_vector *dot, t_vector *normal)
 {
 	float		n;
 	t_vector	tmp;
 
-	tmp = sub_vec(dist->cl_cy->coordinates, *dot);
+	tmp = sub_vec(dist->cl_cy->coord, *dot);
 	normalize_vec(&dist->cl_cy->orien);
 	n = -scalar_vec(tmp, dist->cl_cy->orien);
 	normal->x = -(dist->cl_cy->orien.x * n
-			+ dist->cl_cy->coordinates.x - dot->x);
+			+ dist->cl_cy->coord.x - dot->x);
 	normal->y = -(dist->cl_cy->orien.y * n
-			+ dist->cl_cy->coordinates.y - dot->y);
+			+ dist->cl_cy->coord.y - dot->y);
 	normal->z = -(dist->cl_cy->orien.z * n
-			+ dist->cl_cy->coordinates.z - dot->z);
+			+ dist->cl_cy->coord.z - dot->z);
 	normalize_vec(normal);
 	normalize_vec(dist->dot_light);
 }
@@ -124,8 +70,6 @@ static void	draw_objects(t_minirt *mt, t_vector *ray, int *color)
 		*color = 0xffffe5ff;
 	else
 	{
-		// printf("Closest object: %zu\n", dist->closest_obj);
-
 		int_light = dot_normal(dist, ray);
 		if (shadow_sphere(mt, dist, ray) || shadow_plane(mt, dist, ray)
 			|| shadow_cylinder(mt, dist, ray))

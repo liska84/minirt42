@@ -5,13 +5,18 @@ SRCS_PATH = srcs/
 GET_NEXT_LINE_PATH = ./includes/get_next_line/
 
 SRCS =	main.c \
+		closest_draw.c \
 		draw.c \
 		vector.c \
 		vector2.c \
+		hooks2.c \
 		hooks.c \
 		intersect.c \
+		intersect2.c \
 		color.c \
 		shadow.c \
+		shadow_sphere.c \
+		shadow_cy.c \
 		parser.c \
 		parser_scene.c \
 		parser_utils.c \

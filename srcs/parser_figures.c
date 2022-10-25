@@ -20,7 +20,7 @@ t_obj	parse_sphere(t_obj object, char **line_split)
 		;
 	else if (!line_split[3] || line_split[4])
 		msg_error("Not the right sp input", line_split);
-	sphere->center = split_coordinates(line_split, 1);
+	sphere->center = split_coord(line_split, 1);
 	sphere->diam = ft_stof(line_split[2]);
 	sphere->color = parse_color(line_split, 3);
 	if (!ft_bit_range(sphere->color))
@@ -47,8 +47,8 @@ t_obj	parse_plane(t_obj obj, char **line_split)
 		;
 	else if (!line_split[3] || line_split[4])
 		msg_error("Not the right pl input", line_split);
-	plane->coord = split_coordinates(line_split, 1);
-	plane->orien = split_coordinates(line_split, 2);
+	plane->coord = split_coord(line_split, 1);
+	plane->orien = split_coord(line_split, 2);
 	if (!ft_unit_range(plane->orien))
 		msg_error("'pl': orientaion out of range", line_split);
 	plane->color = parse_color(line_split, 3);
@@ -84,8 +84,8 @@ t_obj	parse_cylinder(t_obj obj, char **line_split)
 		;
 	else if (!line_split[5] || line_split[6])
 		msg_error("Not the right cy input", line_split);
-	cylinder->coordinates = split_coordinates(line_split, 1);
-	cylinder->orien = split_coordinates(line_split, 2);
+	cylinder->coord = split_coord(line_split, 1);
+	cylinder->orien = split_coord(line_split, 2);
 	if (!ft_unit_range(cylinder->orien))
 		msg_error("'cy': orientaion out of range", line_split);
 	cylinder->diameter = ft_stof(line_split[3]);
