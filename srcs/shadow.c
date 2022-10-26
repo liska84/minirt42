@@ -114,10 +114,10 @@ static float	shadow_disk_plane_intersect(t_vector *dot_light,
 		pn = scalar_vec(d, pl->orien);
 		dist = pn / c;
 		if (ft_comp_float(dist, 0) < 0)
-			return (0);
+			return (0.0);
 		return (dist);
 	}
-	return (0);
+	return (0.0);
 }
 
 static float	shadow_disc_intersect(t_vector *dot_light,
@@ -163,42 +163,6 @@ float	shad_cy_intersect(t_vector *dot_light, t_cylinder *cy, t_vector *ray)
 	return (0);
 }
 
-// float	shad_body_inter(t_vector *dot_light, t_cylinder *cy, t_vector *ray)
-// {
-// 	t_coef		coef;
-// 	t_vector	cam_cy;
-// 	float		d1;
-// 	float		d2;
-// 	float		m;
-
-// 	cam_cy = sub_vec(cy->coordinates, *dot_light);
-// 	normalize_vec(&cy->orien);
-// 	coef.a = 1 - pow(scalar_vec(*ray, cy->orien), 2);
-// 	coef.b = -2 * (scalar_vec(*ray, cam_cy) - (scalar_vec(*ray, cy->orien)
-// 				* scalar_vec(cam_cy, cy->orien)));
-// 	coef.c = scalar_vec(cam_cy, cam_cy)
-// 		- pow(scalar_vec(cam_cy, cy->orien), 2)
-// 		- pow(cy->diameter / 2, 2);
-// 	coef.disc = pow(coef.b, 2) - 4.0f * coef.a * coef.c;
-// 	if (ft_comp_float(coef.disc, 0) >= 0.0)
-// 	{
-// 		d1 = (-1 * coef.b - sqrt(coef.disc)) / (2 * coef.a);
-// 		d2 = (-1 * coef.b + sqrt(coef.disc)) / (2 * coef.a);
-// 		m = scalar_vec(*ray, cy->orien)
-// 			* d1 - scalar_vec(cam_cy, cy->orien);
-// 		if (ft_comp_float(d1, 0) > 0 && ft_comp_float(m, 0) >= 0
-// 			&& ft_comp_float(m, cy->height) <= 0
-// 			&& ft_comp_float(d1, d2) < 0)
-// 			return (1);
-// 		m = scalar_vec(*ray, cy->orien) * d2
-// 			- scalar_vec(cam_cy, cy->orien);
-// 		if (ft_comp_float(d2, 0) > 0 && ft_comp_float(m, 0) >= 0
-// 			&& ft_comp_float(m, cy->height) <= 0)
-// 			return (1);
-// 	}
-// 	return (0);
-// }
-
 int	shadow_cylinder(t_minirt *mt, t_dist *dist, t_vector *ray)
 {
 	t_list		*ptr;
@@ -208,8 +172,6 @@ int	shadow_cylinder(t_minirt *mt, t_dist *dist, t_vector *ray)
 	while (ptr)
 	{
 		cy = ptr->content;
-		// if (shad_body_inter(dist->dot_light, cy, ray))
-		// 	return (1);
 		if (shad_cy_intersect(dist->dot_light, cy, ray))
 			return (1);
 		ptr = ptr->next;
