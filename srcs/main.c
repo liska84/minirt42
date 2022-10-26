@@ -15,7 +15,7 @@ void	free_list(t_list *head)
 
 void	leaks(void)
 {
-	system("leaks minirt");
+	system("leaks miniRT");
 }
 
 void	init_mt(t_minirt *mt)
@@ -62,6 +62,10 @@ void	calculate_camera(t_minirt *mt)
 int	main(int ac, char **av)
 {
 	t_minirt	*mt;
+	t_cylinder	*ptr3;
+	t_list		*head;
+	t_plane		*ptr;
+	t_sphere	*ptr2;
 
 	atexit(leaks);
 	mt = malloc(sizeof(t_minirt));
@@ -89,36 +93,47 @@ int	main(int ac, char **av)
 		error();
 	}
 	parser(mt, av[1]);
-	//
-	printf("A: %f %i,%i,%i\n", mt->scene.a_light.ratio, mt->scene.a_light.color.r, mt->scene.a_light.color.g, mt->scene.a_light.color.b);
-	printf("C: %f,%f,%f %f,%f,%f %i\n", mt->scene.camera.origin.x, mt->scene.camera.origin.y, mt->scene.camera.origin.z, mt->scene.camera.direction.x, mt->scene.camera.direction.y, mt->scene.camera.direction.z, mt->scene.camera.fov);
-	printf("L: %f,%f,%f %f %i,%i,%i\n", mt->scene.light.coord.x, mt->scene.light.coord.y, mt->scene.light.coord.z, mt->scene.light.bright, mt->scene.light.color.r, mt->scene.light.color.g, mt->scene.light.color.b);
-	t_list	*head;
-	t_plane *ptr;
+	printf("A: %f %i,%i,%i\n", mt->scene.a_light.ratio,
+		mt->scene.a_light.color.r,
+		mt->scene.a_light.color.g, mt->scene.a_light.color.b);
+	printf("C: %f,%f,%f %f,%f,%f %i\n", mt->scene.camera.origin.x,
+		mt->scene.camera.origin.y,
+		mt->scene.camera.origin.z, mt->scene.camera.direction.x,
+		mt->scene.camera.direction.y,
+		mt->scene.camera.direction.z, mt->scene.camera.fov);
+	printf("L: %f,%f,%f %f %i,%i,%i\n",
+		mt->scene.light.coord.x, mt->scene.light.coord.y,
+		mt->scene.light.coord.z, mt->scene.light.bright,
+		mt->scene.light.color.r,
+		mt->scene.light.color.g, mt->scene.light.color.b);
 	head = mt->obj.plane;
 	while (head)
 	{
 		ptr = head->content;
-		printf("Plane - origin: (%f, %f,%f), orien: (%f, %f, %f)\n", ptr->coord.x, ptr->coord.y, ptr->coord.z, ptr->orien.x, ptr->orien.y, ptr->orien.z);
+		printf("Plane - origin: (%f, %f,%f), orien: (%f, %f, %f)\n",
+			ptr->coord.x, ptr->coord.y,
+			ptr->coord.z, ptr->orien.x, ptr->orien.y, ptr->orien.z);
 		head = head->next;
 	}
-	t_sphere *ptr2;
 	head = mt->obj.sphere;
 	while (head)
 	{
 		ptr2 = head->content;
-		printf("Sphere - C: (%f, %f,%f), D: %f\n", ptr2->center.x, ptr2->center.y, ptr2->center.z, ptr2->diam);
+		printf("Sphere - C: (%f, %f,%f), D: %f\n", ptr2->center.x,
+			ptr2->center.y, ptr2->center.z, ptr2->diam);
 		head = head->next;
 	}
-	t_cylinder *ptr3;
 	head = mt->obj.cylinder;
 	while (head)
 	{
 		ptr3 = head->content;
-		printf("Cylinder - origin: (%f, %f,%f), orien: (%f, %f, %f), D:%f, H: %f\n", ptr3->coordinates.x, ptr3->coordinates.y, ptr3->coordinates.z, ptr3->orien.x, ptr3->orien.y, ptr3->orien.z, ptr3->diameter, ptr3->height);
+		printf("Cylinder - origin: (%f, %f,%f), orien: (%f, %f, %f),"
+			"D:%f, H: %f\n",
+			ptr3->coord.x, ptr3->coord.y,
+			ptr3->coord.z, ptr3->orien.x,
+			ptr3->orien.y, ptr3->orien.z, ptr3->diameter, ptr3->height);
 		head = head->next;
 	}
-	//
 	calculate_camera(mt);
 	draw_scene(mt);
 	if (mlx_image_to_window(mt->gr.mlx, mt->gr.img, 0, 0) < 0)

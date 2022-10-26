@@ -26,8 +26,8 @@ t_scene	parse_camera(t_scene scene, char **line_split)
 		;
 	else if (!line_split[3] || line_split[4])
 		msg_error("Not the right 'C' input", line_split);
-	scene.camera.origin = split_coordinates(line_split, 1);
-	scene.camera.direction = split_coordinates(line_split, 2);
+	scene.camera.origin = split_coord(line_split, 1);
+	scene.camera.direction = split_coord(line_split, 2);
 	if (!ft_unit_range(scene.camera.direction))
 		msg_error("'C': orientaion out of range", line_split);
 	scene.camera.fov = ft_atoi(line_split[3]);
@@ -45,7 +45,7 @@ t_scene	parse_light(t_scene scene, char **line_split)
 		;
 	else if (!line_split[3] || line_split[4])
 		msg_error("Not the right L input", line_split);
-	scene.light.coord = split_coordinates(line_split, 1);
+	scene.light.coord = split_coord(line_split, 1);
 	scene.light.bright = ft_stof(line_split[2]);
 	if (ft_f_less_f(scene.light.bright, 0.0)
 		|| ft_f_greater_f(scene.light.bright, 1.0))

@@ -1,50 +1,5 @@
 #include "minirt.h"
 
-float sphere_intersect(t_camera cam, t_vector ray, t_sphere *sp)
-{
-	t_coef		coef; 
-	t_vector	cam_sp;
-	float		d1;
-	float		d2;
-
-	cam_sp = sub_vec(cam.origin, sp->center);
-	coef.a = 1.0;
-	coef.b = 2 * scalar_vec(cam_sp, ray);
-	coef.c = scalar_vec(cam_sp, cam_sp) - pow(sp->diam / 2, 2);
-	coef.disc = pow(coef.b, 2) - 4.0 * coef.a * coef.c;
-	if (coef.disc < 0.0)
-		return (0);
-	d1 = (-1 * coef.b - sqrt(coef.disc)) / 2 * coef.a;
-	d2 = (-1 * coef.b + sqrt(coef.disc)) / 2 * coef.a;
-	if (d1 > 0.0)
-		return (d1);
-	else if (d2 > 0.0)
-		return (d2);
-	return (0.0);
-}
-
-float plane_intersect(t_camera cam, t_vector ray, t_plane *pl)
-{
-	t_vector	d;
-	float		pn;
-	float		c;
-	float		dist;
-
-	c = scalar_vec(pl->orien, ray);
-	d = sub_vec(pl->coord, cam.origin);
-	if (c)
-	{
-		pn = scalar_vec(d, pl->orien);
-		dist = pn / c;
-		if (dist < 0.0)
-			return (0.0);
-		else
-			return (dist);
-	}
-	else
-		return (0.0);
-}
-
 void	body_intersect(t_camera cam, t_vector ray, t_cylinder *cy, float *min_d)
 {
 	t_coef		coef;
@@ -53,7 +8,7 @@ void	body_intersect(t_camera cam, t_vector ray, t_cylinder *cy, float *min_d)
 	float		d2;
 	float		m;
 
-	cam_cy = sub_vec(cy->coordinates, cam.origin);
+	cam_cy = sub_vec(cy->coord, cam.origin);
 	normalize_vec(&cy->orien);
 	coef.a = 1 - pow(scalar_vec(ray, cy->orien), 2);
 	coef.b = -2 * (scalar_vec(ray, cam_cy) - (scalar_vec(ray, cy->orien)
@@ -129,7 +84,7 @@ float	cy_intersect(t_minirt *mt, t_vector ray, t_dist *dist, t_cylinder *cy)
 
 	min_d = INFINITY;
 	body_intersect(mt->scene.camera, ray, cy, &min_d);
-	pl.coord = cy->coordinates;
+	pl.coord = cy->coord;
 	pl.orien = cy->orien;
 	pl.color = cy->color;
 	d_cap[0] = cap_intersect(mt->scene.camera, ray, &pl, cy->diameter / 2);
@@ -138,7 +93,7 @@ float	cy_intersect(t_minirt *mt, t_vector ray, t_dist *dist, t_cylinder *cy)
 		min_d = d_cap[0];
 	d2 = cy->orien;
 	mult_vec(&d2, cy->height);
-	pl.coord = add_vec(cy->coordinates, d2);
+	pl.coord = add_vec(cy->coord, d2);
 	d_cap[1] = cap_intersect(mt->scene.camera, ray, &pl, cy->diameter / 2);
 	if (ft_comp_float(d_cap[1], 0) > 0
 		&& ft_comp_float(d_cap[1], min_d) < 0)

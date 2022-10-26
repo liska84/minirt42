@@ -44,17 +44,17 @@ t_color	parse_color(char **line_split, int i)
 	return (color);
 }
 
-t_vector	split_coordinates(char **str, int i)
+t_vector	split_coord(char **str, int i)
 {
 	char		**split_coord;
-	t_vector	coordinates;
+	t_vector	coord;
 
 	split_coord = ft_split(str[i], ',');
 	if (!split_coord[0] || !split_coord[1] || !split_coord[2] || split_coord[3])
-		msg_error("Wrong coordinates input", str);
-	coordinates.x = ft_stof(split_coord[0]);
-	coordinates.y = ft_stof(split_coord[1]);
-	coordinates.z = ft_stof(split_coord[2]);
+		msg_error("Wrong coord input", str);
+	coord.x = ft_stof(split_coord[0]);
+	coord.y = ft_stof(split_coord[1]);
+	coord.z = ft_stof(split_coord[2]);
 	ft_split_del(&split_coord);
-	return (coordinates);
+	return (coord);
 }

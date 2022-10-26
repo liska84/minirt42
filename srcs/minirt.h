@@ -75,7 +75,7 @@ typedef struct s_plane
 
 typedef struct s_cylinder
 {
-	t_vector	coordinates;
+	t_vector	coord;
 	t_vector	orien;
 	float		diameter;
 	float		height;
@@ -147,7 +147,7 @@ void		free_content(void *content);
 
 void		parser(t_minirt *mt, char *argv);
 t_color		parse_color(char **line_split, int i);
-t_vector	split_coordinates(char **str, int i);
+t_vector	split_coord(char **str, int i);
 t_scene		parse_ambi_light(t_scene scene, char **line_split);
 t_scene		parse_camera(t_scene scene, char **line_split);
 t_scene		parse_light(t_scene scene, char **line_split);
@@ -160,6 +160,9 @@ void		draw_scene(t_minirt *mt);
 void		hook(void *param);
 void		scrollhook(double xdelta, double ydelta, void *param);
 void		resize(int32_t width, int32_t height, void *param);
+void		move_cam_y(t_minirt *mt, int y);
+void		move_cam_x(t_minirt *mt, int x);
+void		move_cam_z(t_minirt *mt, int z);
 
 t_vector	new_vec(float x, float y, float z);
 float		len_vec(t_vector v);
@@ -182,5 +185,13 @@ int			get_rgba(int r, int g, int b, int a);
 int			shadow_sphere(t_minirt *mt, t_dist *dist, t_vector *ray);
 int			shadow_plane(t_minirt *mt, t_dist *dist, t_vector *ray);
 int			shadow_cylinder(t_minirt *mt, t_dist *dist, t_vector *ray);
+float		shadow_disc_intersect(t_vector *dot_light,
+				t_vector *ray, t_plane *plane, float r);
+float		shadow_disk_plane_intersect(t_vector *dot_light,
+				t_vector *ray, t_plane *pl);
+
+void		closest_sp(t_minirt *mt, t_dist *dist, t_vector *ray);
+void		closest_pl(t_minirt *mt, t_dist *dist, t_vector *ray);
+void		closest_cy(t_minirt *mt, t_dist *dist, t_vector *ray);
 
 #endif
