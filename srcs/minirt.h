@@ -158,6 +158,7 @@ t_obj		parse_sphere(t_obj object, char **line_split);
 void		calculate_camera(t_minirt *mt);
 void		draw_scene(t_minirt *mt);
 void		hook(void *param);
+void 		keyhook(mlx_key_data_t keydata, void* param);
 void		scrollhook(double xdelta, double ydelta, void *param);
 void		resize(int32_t width, int32_t height, void *param);
 void		move_cam_y(t_minirt *mt, int y);

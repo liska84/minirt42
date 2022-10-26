@@ -51,9 +51,6 @@ static void	draw_objects(t_minirt *mt, t_vector *ray, int *color)
 	t_dist	*dist;
 	float	int_light;
 
-	t_vector shadow;
-	t_vector shadow_d;
-
 	int_light = 0;
 	dist = malloc(sizeof(t_dist));
 	dist->dist = -INFINITY;
@@ -74,21 +71,12 @@ static void	draw_objects(t_minirt *mt, t_vector *ray, int *color)
 	else
 	{
 		int_light = dot_normal(dist, ray);
-
-		shadow =new_vec(ray->x, ray->y, ray->z); // Origin
-		shadow_d = sub_vec(mt->scene.light.coord, shadow); // Direction
-		
-		
-
-
-
-
-		if (shadow_sphere(mt, dist, ray) || shadow_plane(mt, dist, ray)
-			|| shadow_cylinder(mt, dist, ray))
-			{
-				*color = draw_pix(mt, dist, 0);
-			}
-		else
+		// if (shadow_sphere(mt, dist, ray) || shadow_plane(mt, dist, ray)
+		// 	|| shadow_cylinder(mt, dist, ray))
+		// 	{
+		// 		*color = draw_pix(mt, dist, 0);
+		// 	}
+		// else
 			*color = draw_pix(mt, dist, int_light);
 	}
 	free(dist->dot_light);

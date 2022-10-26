@@ -45,9 +45,19 @@ void	init_mt(t_minirt *mt)
 	mt->gr.img = NULL;
 }
 
+typedef	struct s_matrix
+{
+	t_vector	row1;
+	t_vector	row2;
+	t_vector	row3;
+	// t_vector	row4;
+}	t_matrix;
+
+/*Negate the direction vector! For matrix Z should be positive*/
 void	calculate_camera(t_minirt *mt)
 {
 	t_vector	tmp;
+	// t_matrix	camtoworld;
 
 	mt->scene.camera.forward_w = mt->scene.camera.direction;
 	mult_vec(&mt->scene.camera.forward_w, -1);
@@ -55,8 +65,19 @@ void	calculate_camera(t_minirt *mt)
 	tmp = new_vec(0, 1, 0);
 	mt->scene.camera.right_u = cross_prod_vec(tmp, mt->scene.camera.forward_w);
 	normalize_vec(&mt->scene.camera.right_u);
-	mt->scene.camera.up_v
-		= cross_prod_vec(mt->scene.camera.forward_w, mt->scene.camera.right_u);
+	mt->scene.camera.right_u.x = 0;
+	mt->scene.camera.right_u.y = -1;
+	mt->scene.camera.up_v = cross_prod_vec(mt->scene.camera.forward_w, mt->scene.camera.right_u);
+	mt->scene.camera.up_v.x = 1;
+	mt->scene.camera.up_v.y = 0;
+	
+	// camtoworld.row1 = new_vec(mt->scene.camera.right_u.x, mt->scene.camera.right_u.y, mt->scene.camera.right_u.z);
+	// camtoworld.row2 = new_vec(mt->scene.camera.up_v.x, mt->scene.camera.up_v.y, mt->scene.camera.up_v.z);
+	// camtoworld.row3 = new_vec(mt->scene.camera.forward_w.x, mt->scene.camera.forward_w.y, mt->scene.camera.forward_w.z);
+	// // camtoworld.row4 = new_vec(0, 0, 0, 1);
+	// printf("(%f, %f, %f)\n", mt->scene.camera.right_u.x, mt->scene.camera.right_u.y, mt->scene.camera.right_u.z);
+	// printf("(%f, %f, %f)\n", mt->scene.camera.up_v.x, mt->scene.camera.up_v.y, mt->scene.camera.up_v.z);
+	// printf("(%f, %f, %f)\n", mt->scene.camera.forward_w.x, mt->scene.camera.forward_w.y, mt->scene.camera.forward_w.z);
 }
 
 int	main(int ac, char **av)
@@ -141,6 +162,7 @@ int	main(int ac, char **av)
 	mlx_loop_hook(mt->gr.mlx, hook, mt);
 	mlx_resize_hook(mt->gr.mlx, resize, mt);
 	mlx_scroll_hook(mt->gr.mlx, scrollhook, mt);
+	mlx_key_hook(mt->gr.mlx, &keyhook, mt);
 	mlx_loop(mt->gr.mlx);
 	mlx_delete_image(mt->gr.mlx, mt->gr.img);
 	mlx_terminate(mt->gr.mlx);

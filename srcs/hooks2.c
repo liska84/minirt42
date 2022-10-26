@@ -20,11 +20,9 @@ void	scrollhook(double xdelta, double ydelta, void *param)
 		mt->scene.camera.fov = 1.0;
 	else if (mt->scene.camera.fov > 180.0)
 		mt->scene.camera.fov = 180.0;
-	printf("FOV: %d\n", mt->scene.camera.fov);
 	draw_scene(mt);
 }
 
-// printf("Aspect ratio: %f\n", (double)mt->width / (double)mt->height);
 void	resize(int32_t width, int32_t height, void *param)
 {
 	t_minirt	*mt;
@@ -34,6 +32,8 @@ void	resize(int32_t width, int32_t height, void *param)
 	mt->width = width;
 	draw_scene(mt);
 }
+
+/* Camera translation*/
 
 void	move_cam_y(t_minirt *mt, int y)
 {
