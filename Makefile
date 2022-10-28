@@ -9,8 +9,8 @@ SRCS =	main.c \
 		draw.c \
 		vector.c \
 		vector2.c \
-		hooks2.c \
-		hooks.c \
+		hooks_camrot.c \
+		hooks_camtr.c \
 		intersect.c \
 		intersect2.c \
 		color.c \

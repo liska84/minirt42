@@ -21,14 +21,6 @@ typedef struct s_vector
 	float	z;
 }	t_vector;
 
-typedef	struct s_matrix
-{
-	t_vector	row1;
-	t_vector	row2;
-	t_vector	row3;
-	// t_vector	row4;
-}	t_matrix;
-
 typedef struct s_color
 {
 	int	r;
@@ -55,7 +47,6 @@ typedef struct s_camera
 	t_vector	origin;
 	t_vector	direction;
 	int			fov;
-	t_matrix	cam2world;
 	t_vector	up_v;
 	t_vector	right_u;
 	t_vector	forward_w;
@@ -153,6 +144,7 @@ bool		ft_bit_range(t_color color);
 bool		ft_unit_range(t_vector vec);
 bool		ft_string_digit(char *str);
 void		free_content(void *content);
+void		free_list(t_list *head);
 
 void		parser(t_minirt *mt, char *argv);
 t_color		parse_color(char **line_split, int i);
@@ -167,12 +159,14 @@ t_obj		parse_sphere(t_obj object, char **line_split);
 void		calculate_camera(t_minirt *mt);
 void		draw_scene(t_minirt *mt);
 void		hook(void *param);
-void 		keyhook(mlx_key_data_t keydata, void* param);
 void		scrollhook(double xdelta, double ydelta, void *param);
 void		resize(int32_t width, int32_t height, void *param);
 void		move_cam_y(t_minirt *mt, int y);
 void		move_cam_x(t_minirt *mt, int x);
 void		move_cam_z(t_minirt *mt, int z);
+void		rotate_cam_y(t_minirt *mt, double y);
+void		rotate_cam_x(t_minirt *mt, double y);
+void		rotate_cam_z(t_minirt *mt, double z);
 
 t_vector	new_vec(float x, float y, float z);
 float		len_vec(t_vector v);
@@ -182,12 +176,15 @@ float		scalar_vec(t_vector a, t_vector b);
 void		mult_vec(t_vector *dir, float n);
 t_vector	add_vec(t_vector a, t_vector b);
 t_vector	cross_prod_vec(t_vector a, t_vector b);
-t_vector	mat3vec(t_matrix matrix, t_vector vector);
 
 float		sphere_intersect(t_camera cam, t_vector ray, t_sphere *sp);
 float		plane_intersect(t_camera cam, t_vector ray, t_plane *pl);
 float		cy_intersect(t_minirt *mt,
 				t_vector ray, t_dist *dist, t_cylinder *cy);
+
+void		closest_sp(t_minirt *mt, t_dist *dist, t_vector *ray);
+void		closest_pl(t_minirt *mt, t_dist *dist, t_vector *ray);
+void		closest_cy(t_minirt *mt, t_dist *dist, t_vector *ray);
 
 int			draw_pix(t_minirt *mt, t_dist *dist, float int_light);
 int			set_color(t_minirt *mt, t_dist *dist, float light);
@@ -200,9 +197,5 @@ float		shadow_disc_intersect(t_vector *dot_light,
 				t_vector *ray, t_plane *plane, float r);
 float		shadow_disk_plane_intersect(t_vector *dot_light,
 				t_vector *ray, t_plane *pl);
-
-void		closest_sp(t_minirt *mt, t_dist *dist, t_vector *ray);
-void		closest_pl(t_minirt *mt, t_dist *dist, t_vector *ray);
-void		closest_cy(t_minirt *mt, t_dist *dist, t_vector *ray);
 
 #endif
