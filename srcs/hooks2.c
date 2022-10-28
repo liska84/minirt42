@@ -37,7 +37,17 @@ void	resize(int32_t width, int32_t height, void *param)
 
 void	move_cam_y(t_minirt *mt, int y)
 {
+	t_vector tmp;
+
 	printf("Moving camera by y\n");
+	mt->scene.camera.origin.y += y;
+
+	tmp = mat3vec(mt->scene.camera.cam2world, mt->scene.camera.origin);
+
+
+
+
+
 	mult_vec(&mt->scene.camera.up_v, y);
 	normalize_vec(&mt->scene.camera.up_v);
 	mt->scene.camera.origin

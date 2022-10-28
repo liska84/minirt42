@@ -126,31 +126,31 @@ void	intro(t_minirt *mt)
 // }
 
 
-void keyhook(mlx_key_data_t keydata, void* param)
-{
-	t_minirt	*mt;
-	int			obj = 0;
+// void keyhook(mlx_key_data_t keydata, void* param)
+// {
+// 	t_minirt	*mt;
+// 	// int			obj = 0;
 
-	mt = param;
-	if (keydata.key == MLX_KEY_LEFT_SUPER && keydata.action == MLX_PRESS)
-		intro(mt);
-	if (keydata.key == MLX_KEY_1 && keydata.action == MLX_PRESS)
-	{
-		printf("Transforming cylinder\n");
-		printf("For rotation press R, for translation press T\n");
-		obj = 1;
-	}
-	if (keydata.key == MLX_KEY_1 && keydata.action == MLX_PRESS)
-	{
-		printf("Transforming sphere\n");
-		printf("For this type of object onle translation is available, press T\n");
-		obj = 2;
-	}
-	// if (keydata.key == MLX_KEY_R && keydata.action == MLX_PRESS)
-	// 	translation(mt, obj);
-	// if (keydata.key == MLX_KEY_T && keydata.action == MLX_PRESS)
-	// 	;
-}
+// 	mt = param;
+// 	if (keydata.key == MLX_KEY_LEFT_SUPER && keydata.action == MLX_PRESS)
+// 		intro(mt);
+// 	if (keydata.key == MLX_KEY_1 && keydata.action == MLX_PRESS)
+// 	{
+// 		printf("Transforming cylinder\n");
+// 		printf("For rotation press R, for translation press T\n");
+// 		obj = 1;
+// 	}
+// 	if (keydata.key == MLX_KEY_1 && keydata.action == MLX_PRESS)
+// 	{
+// 		printf("Transforming sphere\n");
+// 		printf("For this type of object onle translation is available, press T\n");
+// 		obj = 2;
+// 	}
+// 	// if (keydata.key == MLX_KEY_R && keydata.action == MLX_PRESS)
+// 	// 	translation(mt, obj);
+// 	// if (keydata.key == MLX_KEY_T && keydata.action == MLX_PRESS)
+// 	// 	;
+// }
 
 void	hook(void *param)
 {
@@ -173,14 +173,14 @@ void	hook(void *param)
 		move_cam_z(mt, 1);
 	if (mlx_is_key_down(mt->gr.mlx, MLX_KEY_D))
 		move_cam_z(mt, -1);
-	if (mlx_is_key_down(mt->gr.mlx, MLX_KEY_R))
-		rotate_cam_y(mt, 0.4);
-	if (mlx_is_key_down(mt->gr.mlx, MLX_KEY_F))
-		rotate_cam_y(mt, -0.4);
-	if (mlx_is_key_down(mt->gr.mlx, MLX_KEY_T))
-		rotate_cam_x(mt, 0.4);
-	if (mlx_is_key_down(mt->gr.mlx, MLX_KEY_G))
-		rotate_cam_x(mt, -0.4);
+	// if (mlx_is_key_down(mt->gr.mlx, MLX_KEY_R))
+	// 	rotate_cam_y(mt, 0.4);
+	// if (mlx_is_key_down(mt->gr.mlx, MLX_KEY_F))
+	// 	rotate_cam_y(mt, -0.4);
+	// if (mlx_is_key_down(mt->gr.mlx, MLX_KEY_T))
+	// 	rotate_cam_x(mt, 0.4);
+	// if (mlx_is_key_down(mt->gr.mlx, MLX_KEY_G))
+	// 	rotate_cam_x(mt, -0.4);
 	// if (mlx_is_key_down(mt->gr.mlx, MLX_KEY_T))
 	// 	rotate_cam_z(mt, 0.4);
 	// if (mlx_is_key_down(mt->gr.mlx, MLX_KEY_G))

@@ -21,6 +21,14 @@ typedef struct s_vector
 	float	z;
 }	t_vector;
 
+typedef	struct s_matrix
+{
+	t_vector	row1;
+	t_vector	row2;
+	t_vector	row3;
+	// t_vector	row4;
+}	t_matrix;
+
 typedef struct s_color
 {
 	int	r;
@@ -47,6 +55,7 @@ typedef struct s_camera
 	t_vector	origin;
 	t_vector	direction;
 	int			fov;
+	t_matrix	cam2world;
 	t_vector	up_v;
 	t_vector	right_u;
 	t_vector	forward_w;
@@ -173,6 +182,7 @@ float		scalar_vec(t_vector a, t_vector b);
 void		mult_vec(t_vector *dir, float n);
 t_vector	add_vec(t_vector a, t_vector b);
 t_vector	cross_prod_vec(t_vector a, t_vector b);
+t_vector	mat3vec(t_matrix matrix, t_vector vector);
 
 float		sphere_intersect(t_camera cam, t_vector ray, t_sphere *sp);
 float		plane_intersect(t_camera cam, t_vector ray, t_plane *pl);
