@@ -19,6 +19,15 @@ t_vector	get_foot(t_vector coor, t_vector vec, t_vector point)
 	return (p);
 }
 
+static bool	in_direction(t_vector p, t_vector b, t_vector dir)
+{
+	if (scalar_vec(sub_vec(b, p), sub_vec(b, dir)) > 0
+		&& scalar_vec(sub_vec(b, p), sub_vec(b, dir))
+		< scalar_vec(sub_vec(b, dir), sub_vec(b, dir)))
+		return (true);
+	return (false);
+}
+
 float	p_in_rectangle(t_vector p, t_cylinder *cy, t_vector norm)
 {
 	t_vector	vec;
@@ -40,13 +49,9 @@ float	p_in_rectangle(t_vector p, t_cylinder *cy, t_vector norm)
 	c = add_vec(c, new_vec(vec.x * r, vec.y * r, vec.z * r));
 	c = sub_vec(c, new_vec(cy->orien.x * (cy->height / 2), cy->orien.y
 				* (cy->height / 2), cy->orien.z * (cy->height / 2)));
-	if (scalar_vec(sub_vec(b, p), sub_vec(b, a)) > 0
-		&& scalar_vec(sub_vec(b, p), sub_vec(b, a))
-		< scalar_vec(sub_vec(b, a), sub_vec(b, a)))
+	if (in_direction(p, b, a))
 	{
-		if (scalar_vec(sub_vec(b, p), sub_vec(b, c)) > 0
-			&& scalar_vec(sub_vec(b, p), sub_vec(b, c))
-			< scalar_vec(sub_vec(b, c), sub_vec(b, c)))
+		if (in_direction(p, b, c))
 			return (1);
 	}
 	return (0);
@@ -94,21 +99,5 @@ float	shad_cy_intersect(t_vector *dot_light, t_cylinder *cy,
 	plane.orien = cy->orien;
 	if (shadow_disc_intersect(dot_light, ray, &plane, cy->diameter / 2))
 		return (1);
-	return (0);
-}
-
-int	shadow_cylinder(t_minirt *mt, t_dist *dist, t_vector *ray)
-{
-	t_list		*ptr;
-	t_cylinder	*cy;
-
-	ptr = mt->obj.cylinder;
-	while (ptr)
-	{
-		cy = ptr->content;
-		if (shad_cy_intersect(dist->dot_light, cy, ray, mt->scene.light.coord))
-			return (1);
-		ptr = ptr->next;
-	}
 	return (0);
 }

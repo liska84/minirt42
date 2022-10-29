@@ -29,3 +29,8 @@ void	error(void)
 	write(STDERR_FILENO, "Error: allocation failed\n", 25);
 	exit(EXIT_FAILURE);
 }
+
+void	leaks(void)
+{
+	system("leaks miniRT");
+}

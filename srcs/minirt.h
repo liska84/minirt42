@@ -138,6 +138,7 @@ void		error(void);
 void		p_error(void);
 void		m_error(void);
 void		msg_error(char *msg, char **split);
+void		leaks(void);
 
 float		ft_stof(char *str);
 bool		ft_bit_range(t_color color);
@@ -177,8 +178,12 @@ float		sphere_intersect(t_camera cam, t_vector ray, t_sphere *sp);
 float		plane_intersect(t_camera cam, t_vector ray, t_plane *pl);
 float		cy_intersect(t_minirt *mt,
 				t_vector ray, t_dist *dist, t_cylinder *cy);
+float		shad_cy_intersect(t_vector *dot_light, t_cylinder *cy,
+				t_vector *ray, t_vector light);
+bool		compare_caps(float cap, float min_d);
 
 int			draw_pix(t_minirt *mt, t_dist *dist, float int_light);
+void		draw_objects(t_minirt *mt, t_vector *ray, int *color);
 int			set_color(t_minirt *mt, t_dist *dist, float light);
 int			get_rgba(int r, int g, int b, int a);
 

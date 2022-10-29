@@ -1,5 +1,19 @@
 #include "minirt.h"
 
+static bool	is_shadow_plane(t_dist *dist, t_plane *pl)
+{
+	if (ft_comp_float(dist->closest_obj, 2) != 0
+		|| (ft_comp_float(dist->closest_obj, 2) == 0
+			&& (ft_comp_float(pl->coord.x, dist->cl_pl->coord.x) != 0
+				&& ft_comp_float(pl->coord.y, dist->cl_pl->coord.y) != 0
+				&& ft_comp_float(pl->coord.z, dist->cl_pl->coord.z) != 0)
+			&& (ft_comp_float(pl->orien.x, dist->cl_pl->orien.x) != 0
+				&& ft_comp_float(pl->orien.y, dist->cl_pl->orien.y) != 0
+				&& ft_comp_float(pl->orien.z, dist->cl_pl->orien.z) != 0)))
+		return (true);
+	return (false);
+}
+
 int	shadow_plane(t_minirt *mt, t_dist *dist, t_vector *ray)
 {
 	t_list		*ptr;
@@ -11,14 +25,7 @@ int	shadow_plane(t_minirt *mt, t_dist *dist, t_vector *ray)
 	while (ptr)
 	{
 		pl = ptr->content;
-		if (ft_comp_float(dist->closest_obj, 2) != 0
-			|| (ft_comp_float(dist->closest_obj, 2) == 0
-				&& (ft_comp_float(pl->coord.x, dist->cl_pl->coord.x) != 0
-					&& ft_comp_float(pl->coord.y, dist->cl_pl->coord.y) != 0
-					&& ft_comp_float(pl->coord.z, dist->cl_pl->coord.z) != 0)
-				&& (ft_comp_float(pl->orien.x, dist->cl_pl->orien.x) != 0
-					&& ft_comp_float(pl->orien.y, dist->cl_pl->orien.y) != 0
-					&& ft_comp_float(pl->orien.z, dist->cl_pl->orien.z) != 0)))
+		if (is_shadow_plane(dist, pl))
 		{
 			pld = sub_vec(*ray, pl->coord);
 			pll = sub_vec(mt->scene.light.coord, pl->coord);
@@ -74,6 +81,22 @@ float	shadow_disc_intersect(t_vector *dot_light,
 				&& ft_comp_float(p.z, plane->coord.z) == 0)
 			|| ft_comp_float(dist, r) <= 0)
 			return (1);
+	}
+	return (0);
+}
+
+int	shadow_cylinder(t_minirt *mt, t_dist *dist, t_vector *ray)
+{
+	t_list		*ptr;
+	t_cylinder	*cy;
+
+	ptr = mt->obj.cylinder;
+	while (ptr)
+	{
+		cy = ptr->content;
+		if (shad_cy_intersect(dist->dot_light, cy, ray, mt->scene.light.coord))
+			return (1);
+		ptr = ptr->next;
 	}
 	return (0);
 }

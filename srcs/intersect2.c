@@ -46,3 +46,11 @@ float	plane_intersect(t_camera cam, t_vector ray, t_plane *pl)
 	else
 		return (0.0);
 }
+
+bool	compare_caps(float cap, float min_d)
+{
+	if (ft_comp_float(cap, 0) > 0
+		&& ft_comp_float(cap, min_d) < 0)
+		return (true);
+	return (false);
+}
