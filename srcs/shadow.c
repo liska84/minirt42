@@ -55,10 +55,10 @@ float	shadow_disk_plane_intersect(t_vector *dot_light,
 		pn = scalar_vec(d, pl->orien);
 		dist = pn / c;
 		if (ft_comp_float(dist, 0) < 0)
-			return (0);
+			return (0.0);
 		return (dist);
 	}
-	return (0);
+	return (0.0);
 }
 
 float	shadow_disc_intersect(t_vector *dot_light,

@@ -1,18 +1,5 @@
 #include "minirt.h"
 
-void	free_list(t_list *head)
-{
-	t_list	*tmp;
-
-	while (head)
-	{
-		tmp = head;
-		head = head->next;
-		free(tmp->content);
-		free(tmp);
-	}
-}
-
 void	init_mt(t_minirt *mt)
 {
 	mt->width = 1920;
@@ -52,8 +39,14 @@ void	calculate_camera(t_minirt *mt)
 	tmp = new_vec(0, 1, 0);
 	mt->scene.camera.right_u = cross_prod_vec(tmp, mt->scene.camera.forward_w);
 	normalize_vec(&mt->scene.camera.right_u);
-	mt->scene.camera.up_v
-		= cross_prod_vec(mt->scene.camera.forward_w, mt->scene.camera.right_u);
+		mt->scene.camera.up_v = cross_prod_vec(mt->scene.camera.forward_w,
+			mt->scene.camera.right_u);
+	printf("Camera position:\t[%.2f, %.2f, %.2f]\n",
+		mt->scene.camera.origin.x, mt->scene.camera.origin.y,
+		mt->scene.camera.origin.z);
+	printf("Camera direction:\t[%.2f, %.2f, %.2f]\n",
+		mt->scene.camera.direction.x, mt->scene.camera.direction.y,
+		mt->scene.camera.direction.z);
 }
 
 static int	create_mt(char **av, t_minirt *mt)
@@ -112,6 +105,8 @@ int	main(int ac, char **av)
 // 	t_sphere	*ptr2;
 
 // 	atexit(leaks);
+// 	if (ac != 2)
+// 		p_error();
 // 	mt = malloc(sizeof(t_minirt));
 // 	mt->width = 1920;
 // 	mt->height = 1080;

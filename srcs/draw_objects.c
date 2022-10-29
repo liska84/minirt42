@@ -58,6 +58,15 @@ static t_dist	*dist_init(t_dist *dist)
 	return (dist);
 }
 
+	// else
+	// {
+	// 	int_light = dot_normal(dist, ray);
+	// 	// if (shadow_sphere(mt, dist, ray) || shadow_plane(mt, dist, ray)
+	// 	// 	|| shadow_cylinder(mt, dist, ray))
+	// 	// 	*color = draw_pix(mt, dist, 0);
+	// 	// else
+	// 		*color = draw_pix(mt, dist, int_light);
+	// }
 void	draw_objects(t_minirt *mt, t_vector *ray, int *color)
 {
 	t_dist	*dist;
@@ -77,11 +86,7 @@ void	draw_objects(t_minirt *mt, t_vector *ray, int *color)
 	else
 	{
 		int_light = dot_normal(dist, ray);
-		if (shadow_sphere(mt, dist, ray) || shadow_plane(mt, dist, ray)
-			|| shadow_cylinder(mt, dist, ray))
-			*color = draw_pix(mt, dist, 0);
-		else
-			*color = draw_pix(mt, dist, int_light);
+		*color = draw_pix(mt, dist, int_light);
 	}
 	free(dist->dot_light);
 	free(dist);

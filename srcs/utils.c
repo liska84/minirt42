@@ -58,3 +58,16 @@ t_vector	split_coord(char **str, int i)
 	ft_split_del(&split_coord);
 	return (coord);
 }
+
+void	free_list(t_list *head)
+{
+	t_list	*tmp;
+
+	while (head)
+	{
+		tmp = head;
+		head = head->next;
+		free(tmp->content);
+		free(tmp);
+	}
+}
