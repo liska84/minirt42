@@ -30,6 +30,8 @@ float	plane_intersect(t_camera cam, t_vector ray, t_plane *pl)
 	float		c;
 	float		dist;
 
+	if (scalar_vec(ray, pl->orien) == 0)
+		return (0);
 	c = scalar_vec(pl->orien, ray);
 	d = sub_vec(pl->coord, cam.origin);
 	if (c)

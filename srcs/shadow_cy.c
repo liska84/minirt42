@@ -27,7 +27,7 @@ float	p_in_rectangle(t_vector p, t_cylinder *cy, t_vector norm)
 	t_vector	c;
 	float		r;
 
-	r = cy->diameter / 2 * 1.015;
+	r = cy->diameter / 2 * 1.02;
 	vec = cross_prod_vec(cy->orien, norm);
 	normalize_vec(&vec);
 	c = add_vec(cy->coord, new_vec(cy->orien.x * (cy->height / 2), cy->orien.y
